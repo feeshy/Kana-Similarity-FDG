@@ -1,0 +1,22 @@
+{
+  "name": "假名相似度力导向图",
+  "short_name": "假名相似图",
+  "start_url": "/zh",
+  "display": "standalone",
+  "background_color": "#f5f5f7",
+  "theme_color": "#1d1d1f",
+  "icons": [
+    {
+      "src": "assets/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/maskable.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ]
+}

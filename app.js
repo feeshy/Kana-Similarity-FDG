@@ -1,0 +1,418 @@
+async function main() {
+  // ─── Data ────────────────────────────────────────────────
+
+  // ─── Data ────────────────────────────────────────────────
+  const HIRAGANA = [
+    { id: 'h-a', kana: 'あ', romaji: 'a', origin: '安' }, { id: 'h-i', kana: 'い', romaji: 'i', origin: '以' },
+    { id: 'h-u', kana: 'う', romaji: 'u', origin: '宇' }, { id: 'h-e', kana: 'え', romaji: 'e', origin: '衣' },
+    { id: 'h-o', kana: 'お', romaji: 'o', origin: '於' }, { id: 'h-ka', kana: 'か', romaji: 'ka', origin: '加' },
+    { id: 'h-ki', kana: 'き', romaji: 'ki', origin: '幾' }, { id: 'h-ku', kana: 'く', romaji: 'ku', origin: '久' },
+    { id: 'h-ke', kana: 'け', romaji: 'ke', origin: '計' }, { id: 'h-ko', kana: 'こ', romaji: 'ko', origin: '己' },
+    { id: 'h-sa', kana: 'さ', romaji: 'sa', origin: '左' }, { id: 'h-shi', kana: 'し', romaji: 'shi', origin: '之' },
+    { id: 'h-su', kana: 'す', romaji: 'su', origin: '寸' }, { id: 'h-se', kana: 'せ', romaji: 'se', origin: '世' },
+    { id: 'h-so', kana: 'そ', romaji: 'so', origin: '曾' }, { id: 'h-ta', kana: 'た', romaji: 'ta', origin: '太' },
+    { id: 'h-chi', kana: 'ち', romaji: 'chi', origin: '知' }, { id: 'h-tsu', kana: 'つ', romaji: 'tsu', origin: '川' },
+    { id: 'h-te', kana: 'て', romaji: 'te', origin: '天' }, { id: 'h-to', kana: 'と', romaji: 'to', origin: '止' },
+    { id: 'h-na', kana: 'な', romaji: 'na', origin: '奈' }, { id: 'h-ni', kana: 'に', romaji: 'ni', origin: '仁' },
+    { id: 'h-nu', kana: 'ぬ', romaji: 'nu', origin: '奴' }, { id: 'h-ne', kana: 'ね', romaji: 'ne', origin: '祢' },
+    { id: 'h-no', kana: 'の', romaji: 'no', origin: '乃' }, { id: 'h-ha', kana: 'は', romaji: 'ha', origin: '波' },
+    { id: 'h-hi', kana: 'ひ', romaji: 'hi', origin: '比' }, { id: 'h-fu', kana: 'ふ', romaji: 'fu', origin: '不' },
+    { id: 'h-he', kana: 'へ', romaji: 'he', origin: '部' }, { id: 'h-ho', kana: 'ほ', romaji: 'ho', origin: '保' },
+    { id: 'h-ma', kana: 'ま', romaji: 'ma', origin: '末' }, { id: 'h-mi', kana: 'み', romaji: 'mi', origin: '美' },
+    { id: 'h-mu', kana: 'む', romaji: 'mu', origin: '武' }, { id: 'h-me', kana: 'め', romaji: 'me', origin: '女' },
+    { id: 'h-mo', kana: 'も', romaji: 'mo', origin: '毛' }, { id: 'h-ya', kana: 'や', romaji: 'ya', origin: '也' },
+    { id: 'h-yu', kana: 'ゆ', romaji: 'yu', origin: '由' }, { id: 'h-yo', kana: 'よ', romaji: 'yo', origin: '与' },
+    { id: 'h-ra', kana: 'ら', romaji: 'ra', origin: '良' }, { id: 'h-ri', kana: 'り', romaji: 'ri', origin: '利' },
+    { id: 'h-ru', kana: 'る', romaji: 'ru', origin: '留' }, { id: 'h-re', kana: 'れ', romaji: 're', origin: '礼' },
+    { id: 'h-ro', kana: 'ろ', romaji: 'ro', origin: '呂' }, { id: 'h-wa', kana: 'わ', romaji: 'wa', origin: '和' },
+    { id: 'h-wo', kana: 'を', romaji: 'wo', origin: '遠' }, { id: 'h-n', kana: 'ん', romaji: 'n', origin: '无' },
+  ];
+  const KATAKANA = [
+    { id: 'k-a', kana: 'ア', romaji: 'a', origin: '阿' }, { id: 'k-i', kana: 'イ', romaji: 'i', origin: '伊' },
+    { id: 'k-u', kana: 'ウ', romaji: 'u', origin: '宇' }, { id: 'k-e', kana: 'エ', romaji: 'e', origin: '江' },
+    { id: 'k-o', kana: 'オ', romaji: 'o', origin: '於' }, { id: 'k-ka', kana: 'カ', romaji: 'ka', origin: '加' },
+    { id: 'k-ki', kana: 'キ', romaji: 'ki', origin: '幾' }, { id: 'k-ku', kana: 'ク', romaji: 'ku', origin: '久' },
+    { id: 'k-ke', kana: 'ケ', romaji: 'ke', origin: '計' }, { id: 'k-ko', kana: 'コ', romaji: 'ko', origin: '己' },
+    { id: 'k-sa', kana: 'サ', romaji: 'sa', origin: '散' }, { id: 'k-shi', kana: 'シ', romaji: 'shi', origin: '之' },
+    { id: 'k-su', kana: 'ス', romaji: 'su', origin: '須' }, { id: 'k-se', kana: 'セ', romaji: 'se', origin: '世' },
+    { id: 'k-so', kana: 'ソ', romaji: 'so', origin: '曾' }, { id: 'k-ta', kana: 'タ', romaji: 'ta', origin: '多' },
+    { id: 'k-chi', kana: 'チ', romaji: 'chi', origin: '知' }, { id: 'k-tsu', kana: 'ツ', romaji: 'tsu', origin: '川' },
+    { id: 'k-te', kana: 'テ', romaji: 'te', origin: '天' }, { id: 'k-to', kana: 'ト', romaji: 'to', origin: '止' },
+    { id: 'k-na', kana: 'ナ', romaji: 'na', origin: '奈' }, { id: 'k-ni', kana: 'ニ', romaji: 'ni', origin: '二' },
+    { id: 'k-nu', kana: 'ヌ', romaji: 'nu', origin: '奴' }, { id: 'k-ne', kana: 'ネ', romaji: 'ne', origin: '祢' },
+    { id: 'k-no', kana: 'ノ', romaji: 'no', origin: '乃' }, { id: 'k-ha', kana: 'ハ', romaji: 'ha', origin: '八' },
+    { id: 'k-hi', kana: 'ヒ', romaji: 'hi', origin: '比' }, { id: 'k-fu', kana: 'フ', romaji: 'fu', origin: '不' },
+    { id: 'k-he', kana: 'ヘ', romaji: 'he', origin: '部' }, { id: 'k-ho', kana: 'ホ', romaji: 'ho', origin: '保' },
+    { id: 'k-ma', kana: 'マ', romaji: 'ma', origin: '万' }, { id: 'k-mi', kana: 'ミ', romaji: 'mi', origin: '三' },
+    { id: 'k-mu', kana: 'ム', romaji: 'mu', origin: '牟' }, { id: 'k-me', kana: 'メ', romaji: 'me', origin: '女' },
+    { id: 'k-mo', kana: 'モ', romaji: 'mo', origin: '毛' }, { id: 'k-ya', kana: 'ヤ', romaji: 'ya', origin: '也' },
+    { id: 'k-yu', kana: 'ユ', romaji: 'yu', origin: '由' }, { id: 'k-yo', kana: 'ヨ', romaji: 'yo', origin: '与' },
+    { id: 'k-ra', kana: 'ラ', romaji: 'ra', origin: '良' }, { id: 'k-ri', kana: 'リ', romaji: 'ri', origin: '利' },
+    { id: 'k-ru', kana: 'ル', romaji: 'ru', origin: '流' }, { id: 'k-re', kana: 'レ', romaji: 're', origin: '礼' },
+    { id: 'k-ro', kana: 'ロ', romaji: 'ro', origin: '呂' }, { id: 'k-wa', kana: 'ワ', romaji: 'wa', origin: '和' },
+    { id: 'k-wo', kana: 'ヲ', romaji: 'wo', origin: '乎' }, { id: 'k-n', kana: 'ン', romaji: 'n', origin: '尓' },
+  ];
+
+  const allNodes = [...HIRAGANA.map(d => ({ ...d, type: 'hiragana' })),
+  ...KATAKANA.map(d => ({ ...d, type: 'katakana' }))];
+  const nodeMap = Object.fromEntries(allNodes.map(d => [d.id, d]));
+
+  // kana → ID lookup for matrix parsing
+  const kanaToId = {};
+  for (const d of HIRAGANA) kanaToId[d.kana] = d.id;
+  for (const d of KATAKANA) kanaToId[d.kana] = d.id;
+
+  // ─── Load & parse perceptual distance matrix ────────────
+  const csv = await fetch('assets/data.csv').then(r => r.text());
+  const rows = csv.split('\n').map(r => r.split(','));
+  const colIds = rows[1].slice(2).map(k => kanaToId[k.trim()]);
+
+  const distMap = {}; // all 4186 pairs → distance
+  const allRaw = [];  // all pairs [source,target,distance]
+
+  for (let ri = 2; ri < rows.length; ri++) {
+    const r = rows[ri], rid = kanaToId[r[1].trim()];
+    if (!rid) continue;
+    for (let ci = 2; ci < r.length; ci++) {
+      const v = r[ci].trim();
+      if (!v) continue;
+      const cid = colIds[ci - 2];
+      if (!cid) continue;
+      const d = parseInt(v);
+      distMap[rid + ':' + cid] = d;
+      distMap[cid + ':' + rid] = d;
+      allRaw.push([rid, cid, d]);
+    }
+  }
+
+  // build per-mode link sets with independent thresholds
+  function mkLS(filter, raw, mode) {
+    return raw.filter(([s, t, d]) => {
+      const sn = nodeMap[s], tn = nodeMap[t];
+      if (!sn || !tn) return false;
+      const same = sn.type === tn.type;
+      if (mode === 'hira') return same && sn.type === 'hiragana' && d <= (filter.withinDist ?? 99);
+      if (mode === 'kata') return same && sn.type === 'katakana' && d <= (filter.withinDist ?? 99);
+      // cross: all pairs (within-script + across) within threshold
+      if (mode === 'cross') return (same ? d <= (filter.withinDist ?? 99) : d <= (filter.crossDist ?? 99));
+      return false;
+    }).map(([s, t, d]) => ({ source: s, target: t, dist: d }));
+  }
+
+  const hLinks = mkLS(FORCE.hira, allRaw, 'hira');
+  const kLinks = mkLS(FORCE.kata, allRaw, 'kata');
+  const aLinks = mkLS(FORCE.cross, allRaw, 'cross');
+
+  const visualLinks = [...hLinks, ...kLinks, ...aLinks];
+  const links = visualLinks;
+
+  const aNodeIds = new Set();
+  aLinks.forEach(l => { aNodeIds.add(l.source); aNodeIds.add(l.target); });
+  const aNodes = allNodes.filter(d => aNodeIds.has(d.id));
+
+  const hNodes = allNodes.filter(d => d.type === 'hiragana');
+  const kNodes = allNodes.filter(d => d.type === 'katakana');
+
+  // IDs of nodes with at least one connection (for filtering)
+  const hNodeIds = new Set(); hLinks.forEach(l => { hNodeIds.add(l.source); hNodeIds.add(l.target) });
+  const kNodeIds = new Set(); kLinks.forEach(l => { kNodeIds.add(l.source); kNodeIds.add(l.target) });
+
+  const romajiToKana = {};
+  for (const n of allNodes) {
+    if (!romajiToKana[n.romaji]) romajiToKana[n.romaji] = {};
+    romajiToKana[n.romaji][n.type] = n;
+  }
+
+  // ─── SVG setup ───────────────────────────────────────────
+  const svg = d3.select('#graph');
+  let width = window.innerWidth;
+  let height = window.innerHeight;
+  svg.attr('viewBox', [0, 0, width, height]);
+
+  const g = svg.append('g');
+  const linkG = g.append('g').attr('class', 'links');
+  const nodeG = g.append('g').attr('class', 'nodes');
+
+  // ─── Zoom ────────────────────────────────────────────────
+  const zoom = d3.zoom()
+    .scaleExtent([0.2, 6])
+    .on('zoom', (e) => g.attr('transform', e.transform));
+  svg.call(zoom);
+
+  // ─── Deep-cloned data per simulation ─────────────────────
+  const hData = hNodes.map(d => ({ ...d, x: undefined, y: undefined, vx: undefined, vy: undefined, fx: undefined, fy: undefined }));
+  const kData = kNodes.map(d => ({ ...d, x: undefined, y: undefined, vx: undefined, vy: undefined, fx: undefined, fy: undefined }));
+  const aData = aNodes.map(d => ({ ...d, x: undefined, y: undefined, vx: undefined, vy: undefined, fx: undefined, fy: undefined }));
+
+  const hMap = Object.fromEntries(hData.map(d => [d.id, d]));
+  const kMap = Object.fromEntries(kData.map(d => [d.id, d]));
+  const aMap = Object.fromEntries(aData.map(d => [d.id, d]));
+
+  // ─── Simulation ──────────────────────────────────────────
+  function cfg(mode) {
+    const ov = FORCE[mode]; // mode-specific overrides (e.g. FORCE.hira)
+    if (!ov) return FORCE;
+    const m = Object.assign({}, FORCE, ov);
+    m.link = Object.assign({}, FORCE.link, ov.link);
+    return m;
+  }
+
+  function mkLink(ls, c) {
+    return d3.forceLink(ls).id(d => d.id)
+      .distance(l => l.dist * c.link.distScale)
+      .strength(l => c.link.strength / Math.max(1, l.dist / 50));
+  }
+  function mkForces(c) {
+    return [
+      d3.forceManyBody().strength(c.charge),
+      d3.forceCenter(width / 2, height / 2),
+      d3.forceCollide().radius(c.collide)
+    ];
+  }
+
+  const cH = cfg('hira'); const cK = cfg('kata'); const cX = cfg('cross');
+
+  const simH = d3.forceSimulation(hData)
+    .force('link', mkLink(hLinks, cH))
+    .force('charge', mkForces(cH)[0])
+    .force('center', mkForces(cH)[1])
+    .force('collide', mkForces(cH)[2])
+    .alphaDecay(cH.alphaDecay).alphaTarget(cH.alphaIdle).nodes(hData);
+
+  const simK = d3.forceSimulation(kData)
+    .force('link', mkLink(kLinks, cK))
+    .force('charge', mkForces(cK)[0])
+    .force('center', mkForces(cK)[1])
+    .force('collide', mkForces(cK)[2])
+    .alphaDecay(cK.alphaDecay).alphaTarget(cK.alphaIdle).nodes(kData);
+
+  const simA = d3.forceSimulation(aData)
+    .force('link', mkLink(aLinks, cX))
+    .force('charge', mkForces(cX)[0])
+    .force('center', mkForces(cX)[1])
+    .force('collide', mkForces(cX)[2])
+    .alphaDecay(cX.alphaDecay).alphaTarget(cX.alphaIdle).nodes(aData);
+
+  let activeFilter = 'cross';
+
+  // ─── Tick ────────────────────────────────────────────────
+  function tickDOM(map) {
+    linkEls.each(function (l) {
+      const sid = l.source.id || l.source;
+      const tid = l.target.id || l.target;
+      const s = map[sid];
+      const t = map[tid];
+      if (s && t) d3.select(this).attr('x1', s.x).attr('y1', s.y).attr('x2', t.x).attr('y2', t.y);
+    });
+    linkLabel.each(function (l) {
+      const sid = l.source.id || l.source;
+      const tid = l.target.id || l.target;
+      const s = map[sid];
+      const t = map[tid];
+      if (s && t) d3.select(this).attr('x', (s.x + t.x) / 2).attr('y', (s.y + t.y) / 2);
+    });
+    nodeEls.each(function (d) {
+      const nd = map[d.id];
+      if (nd) d3.select(this).attr('transform', `translate(${nd.x},${nd.y})`);
+    });
+  }
+  simH.on('tick', () => { if (activeFilter === 'hiragana') tickDOM(hMap); });
+  simK.on('tick', () => { if (activeFilter === 'katakana') tickDOM(kMap); });
+  simA.on('tick', () => { if (activeFilter === 'cross') tickDOM(aMap); });
+
+  // ─── Draw links ──────────────────────────────────────────
+  const linkEls = linkG.selectAll('line')
+    .data(links).join('line')
+    .attr('class', 'link')
+    .attr('stroke', FORCE.linkVisual)
+    .attr('opacity', FORCE.linkOpacity);
+
+  // link distance labels (hidden by default)
+  const linkLabel = linkG.selectAll('.link-label')
+    .data(links).join('text')
+    .attr('class', 'link-label')
+    .attr('font-size', 12)
+    .attr('text-anchor', 'middle')
+    .attr('dy', '-.3em')
+    .text(l => l.dist != null ? l.dist : '')
+    .style('display', 'none');
+
+  // ─── Draw nodes ──────────────────────────────────────────
+  const nodeEls = nodeG.selectAll('g')
+    .data(allNodes).join('g')
+    .attr('class', 'node');
+
+  nodeEls.append('circle')
+    .attr('r', FORCE.nodeRadius)
+    .attr('fill', d => d.type === 'hiragana' ? FORCE.nodeH : FORCE.nodeK);
+
+  nodeEls.append('text')
+    .text(d => d.kana)
+    .attr('font-size', FORCE.nodeFontSize)
+    .attr('dy', '.35em');
+
+  // ─── Drag ────────────────────────────────────────────────
+  function getAM() {
+    if (activeFilter === 'hiragana') return hMap;
+    if (activeFilter === 'katakana') return kMap;
+    return aMap;
+  }
+  const drag = d3.drag()
+    .on('start', (e, d) => {
+      const a = getAM()[d.id];
+      if (a) { a.fx = a.x; a.fy = a.y; }
+      const s = activeFilter === 'hiragana' ? simH : activeFilter === 'katakana' ? simK : simA;
+      if (!e.active) s.alphaTarget(cfg(activeFilter).alphaWake).restart();
+    })
+    .on('drag', (e, d) => {
+      const a = getAM()[d.id];
+      if (a) { a.fx = e.x; a.fy = e.y; }
+    })
+    .on('end', (e, d) => {
+      const a = getAM()[d.id];
+      if (a) { a.fx = null; a.fy = null; }
+      const s = activeFilter === 'hiragana' ? simH : activeFilter === 'katakana' ? simK : simA;
+      if (!e.active) s.alphaTarget(cfg(activeFilter).alphaIdle);
+    });
+  nodeEls.call(drag);
+
+  // ─── Card ────────────────────────────────────────────────
+  const card = d3.select('#infoCard');
+  const closeBtn = d3.select('#closeCard');
+  const cardKana = d3.select('#cardKana');
+  const cardRomaji = d3.select('#cardRomaji');
+
+  let selectedNode = null;
+
+  function showCard(d) {
+    selectedNode = d;
+    var labels = { hira: 'HIRA', kata: 'KATA' };
+    var lang = document.documentElement.lang;
+    if (lang.startsWith('ja')) { labels.hira = '平仮名'; labels.kata = '片仮名'; }
+    else if (lang.startsWith('zh')) { labels.hira = '平假名'; labels.kata = '片假名'; }
+    const hNode = d.type === 'hiragana' ? d : romajiToKana[d.romaji]?.hiragana;
+    const kNode = d.type === 'katakana' ? d : romajiToKana[d.romaji]?.katakana;
+    if (hNode && kNode) {
+      cardKana.html(
+        `<span class="ku"><span class="ku-l">${labels.hira}</span><span class="ku-c">${hNode.kana}</span><span class="ku-o">${hNode.origin}</span></span>` +
+        `<span class="ku-r">${d.romaji}</span>` +
+        `<span class="ku"><span class="ku-l">${labels.kata}</span><span class="ku-c">${kNode.kana}</span><span class="ku-o">${kNode.origin}</span></span>`);
+    } else {
+      const label = d.type === 'hiragana' ? labels.hira : labels.kata;
+      cardKana.html(
+        `<span class="ku"><span class="ku-l">${label}</span><span class="ku-c">${d.kana}</span></span>`);
+      cardRomaji.text(d.romaji);
+    }
+    card.classed('visible', true);
+  }
+
+  function hideCard() {
+    selectedNode = null;
+    linkEls.classed('hl', false);
+    card.classed('visible', false);
+  }
+
+  closeBtn.on('click', hideCard);
+
+  // auto-hide hint
+  setTimeout(() => {
+    d3.select('#navHint').style('opacity', 0);
+  }, 6000);
+
+  nodeEls.on('click', (e, d) => {
+    e.stopPropagation();
+    if (selectedNode?.id === d.id) { hideCard(); return; }
+    showCard(d);
+    var nd = getAM()[d.id];
+    if (nd) svg.transition().duration(600)
+      .call(zoom.transform, d3.zoomIdentity.translate(width / 2 - nd.x, height / 2 - nd.y));
+    // highlight connected links
+    linkEls.classed('hl', l => {
+      const sid = l.source.id || l.source, tid = l.target.id || l.target;
+      return sid === d.id || tid === d.id;
+    });
+  });
+
+  function resetZoom() {
+    svg.transition().duration(500).call(zoom.transform, d3.zoomIdentity);
+    linkEls.classed('hl', false);
+  }
+
+  svg.on('click', () => { hideCard(); resetZoom() });
+
+  // ─── Filter ──────────────────────────────────────────────
+  function showFilter(filter) {
+    nodeEls.each(function (d) {
+      let show;
+      if (filter === 'cross') show = aNodeIds.has(d.id);
+      else if (filter === 'hiragana') show = hNodeIds.has(d.id);
+      else show = kNodeIds.has(d.id);
+      d3.select(this).style('display', show ? null : 'none');
+    });
+    linkEls.each(function (l) {
+      const sid = l.source.id || l.source;
+      const tid = l.target.id || l.target;
+      const sn = nodeMap[sid];
+      const tn = nodeMap[tid];
+      let show;
+      if (filter === 'cross') show = sn && tn && aNodeIds.has(sid) && aNodeIds.has(tid);
+      else show = sn && tn && sn.type === filter && tn.type === filter;
+      d3.select(this).style('display', show ? null : 'none');
+    });
+    linkLabel.each(function (l) {
+      const sid = l.source.id || l.source;
+      const tid = l.target.id || l.target;
+      const sn = nodeMap[sid];
+      const tn = nodeMap[tid];
+      let show;
+      if (filter === 'cross') show = sn && tn && aNodeIds.has(sid) && aNodeIds.has(tid);
+      else show = sn && tn && sn.type === filter && tn.type === filter;
+      d3.select(this).style('display', show && d3.select('#distToggle').classed('on') ? null : 'none');
+    });
+  }
+
+  const filterBtns = d3.selectAll('.filter-btn');
+  filterBtns.on('click', (e, d) => {
+    const btn = d3.select(e.currentTarget);
+    filterBtns.classed('active', false);
+    btn.classed('active', true);
+    const f = btn.attr('data-filter');
+    activeFilter = f;
+    showFilter(f);
+    if (selectedNode) {
+      const hide = f === 'cross' ? !aNodeIds.has(selectedNode.id)
+        : f === 'hiragana' ? !hNodeIds.has(selectedNode.id)
+          : !kNodeIds.has(selectedNode.id);
+      if (hide) hideCard();
+    }
+    resetZoom();
+  });
+
+  // dist toggle
+  d3.select('#distToggle').on('click', function () {
+    const btn = d3.select(this);
+    const on = btn.classed('on');
+    btn.classed('on', !on);
+    // re-run filter logic so labels respect both toggle + current filter
+    showFilter(activeFilter);
+  });
+
+  // dist info toggle
+  d3.select('#distInfoBtn').on('click', function (e) {
+    e.stopPropagation();
+    const info = d3.select('#distInfo');
+    info.classed('visible', !info.classed('visible'));
+  });
+  d3.select(document).on('click', () => d3.select('#distInfo').classed('visible', false));
+
+  showFilter('cross');
+
+  // ─── Resize ──────────────────────────────────────────────
+  window.addEventListener('resize', () => {
+    width = window.innerWidth;
+    height = window.innerHeight;
+    svg.attr('viewBox', [0, 0, width, height]);
+    [[simH, cH], [simK, cK], [simA, cX]].forEach(([s, c]) =>
+      s.force('center', d3.forceCenter(width / 2, height / 2)).alpha(c.alphaWake).restart());
+  });
+}

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kana Similarity FDG — Explore Hiragana & Katakana Visual Similarities</title>
+  <meta name="description" content="Interactive force-directed graph of Japanese hiragana and katakana. Discover visual similarities between kana characters, their romaji readings, and kanji origins.">
+  <meta name="keywords" content="japanese, kana, hiragana, katakana, force-directed graph, visualization, learn japanese, kanji origin">
+
+  <meta property="og:title" content="Kana Similarity FDG">
+  <meta property="og:description" content="Interactive force visualization revealing visual similarities between Japanese hiragana and katakana characters with romaji and kanji origins.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://kana.feeshy.top/assets/maskable.svg">
+  <meta property="og:url" content="https://kana.feeshy.top">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://kana.feeshy.top/assets/maskable.svg">
+
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="manifest-en.json">
+  <link rel="canonical" href="https://kana.feeshy.top">
+  <link rel="alternate" hreflang="en" href="https://kana.feeshy.top">
+  <link rel="alternate" hreflang="ja" href="https://kana.feeshy.top/ja">
+  <link rel="alternate" hreflang="zh" href="https://kana.feeshy.top/zh">
+  <link rel="alternate" hreflang="x-default" href="https://kana.feeshy.top">
+
+  <script>
+    var lang = (navigator.language || navigator.userLanguage || '').slice(0, 2);
+    if (lang === 'ja') location.replace('/ja');
+    else if (lang === 'zh') location.replace('/zh');
+  </script>
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Kana Similarity FDG",
+      "description": "Interactive force-directed graph exploring visual similarities between Japanese hiragana and katakana characters.",
+      "url": "https://kana.feeshy.top",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "All",
+      "author": {
+        "@type": "Person",
+        "name": "feeshy",
+        "url": "https://feeshy.top"
+      }
+    }
+  </script>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div class="filter-bar" id="filterBar">
+    <button class="filter-btn" data-filter="hiragana">HIRA</button>
+    <button class="filter-btn" data-filter="katakana">KATA</button>
+    <button class="filter-btn active" data-filter="cross">CROSS</button>
+    <span class="filter-sep"></span>
+    <button class="filter-btn toggle" id="distToggle" aria-label="Toggle distance labels">DIST</button>
+    <span class="dist-btn" id="distInfoBtn" aria-label="About distance">?</span>
+    <div class="dist-info" id="distInfo" role="tooltip">Perceptual distance, smaller = harder to distinguish. <a href="https://doi.org/10.1007/s12144-021-02664-w" target="_blank" rel="noopener">Higuchi & Kobayashi 2023</a></div>
+  </div>
+  <div class="nav-hint" id="navHint">click a character to explore</div>
+
+  <svg id="graph"></svg>
+
+  <div class="card" id="infoCard">
+    <button class="close-btn" id="closeCard">✕</button>
+    <div class="kana-char" id="cardKana"></div>
+    <div class="romaji" id="cardRomaji"></div>
+  </div>
+
+  <div class="footer">
+    <span>
+      <a href="https://github.com/feeshy/kana-similarity-fdg" target="_blank" rel="noopener">Code: </a><a href="https://feeshy.top" target="_blank" rel="noopener">feeshy</a>(BSD-3 Clause)
+    </span>
+
+
+    <span class="sep">·</span>
+    <span>
+      <a href="https://doi.org/10.1007/s12144-021-02664-w" target="_blank" rel="noopener">Data: Higuchi &amp; Kobayashi</a>(CC-BY)
+    </span>
+
+  </div>
+
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+  <script>
+    main().catch(e => { document.body.textContent = 'Error: ' + e.message; });
+  </script>
+  <script>
+    if ('serviceWorker' in navigator) navigator.serviceWorker.register('service-worker.js');
+  </script>
+
+</body>
+
+</html>

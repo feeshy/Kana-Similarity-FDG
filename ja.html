@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>かな類似度力指向グラフ — ひらがな・カタカナの視覚的類似性を探索</title>
+  <meta name="description" content="ひらがなとカタカナの視覚的類似性を力指向グラフで可視化。文字をクリックしてローマ字や漢字由来を確認できます。">
+  <meta name="keywords" content="かな, ひらがな, カタカナ, 類似性, フォースグラフ, 可視化, 日本語学習, 漢字起源">
+
+  <meta property="og:title" content="かな類似度力指向グラフ">
+  <meta property="og:description" content="ひらがなとカタカナの視覚的類似性を力指向グラフでインタラクティブに探索。">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://kana.feeshy.top/assets/maskable.svg">
+  <meta property="og:url" content="https://kana.feeshy.top/ja">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://kana.feeshy.top/assets/maskable.svg">
+
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="manifest-ja.json">
+  <link rel="canonical" href="https://kana.feeshy.top/ja">
+  <link rel="alternate" hreflang="en" href="https://kana.feeshy.top">
+  <link rel="alternate" hreflang="ja" href="https://kana.feeshy.top/ja">
+  <link rel="alternate" hreflang="zh" href="https://kana.feeshy.top/zh">
+  <link rel="alternate" hreflang="x-default" href="https://kana.feeshy.top">
+  <script>
+    var lang = (navigator.language || navigator.userLanguage || '').slice(0, 2);
+    if (lang === 'en' || (lang !== 'ja' && lang !== 'zh')) location.replace('/');
+    else if (lang === 'zh') location.replace('/zh');
+  </script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "かな類似度力指向グラフ",
+      "description": "ひらがなとカタカナの視覚的類似性を力指向グラフで可視化するインタラクティブツール。",
+      "url": "https://kana.feeshy.top/ja",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "All",
+      "author": {
+        "@type": "Person",
+        "name": "feeshy",
+        "url": "https://feeshy.top"
+      }
+    }
+  </script>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div class="filter-bar" id="filterBar">
+    <button class="filter-btn" data-filter="hiragana">平仮名</button>
+    <button class="filter-btn" data-filter="katakana">片仮名</button>
+    <button class="filter-btn active" data-filter="cross">両方</button>
+    <span class="filter-sep"></span>
+    <button class="filter-btn toggle" id="distToggle" aria-label="距離ラベル表示切替">距離</button>
+    <span class="dist-btn" id="distInfoBtn" aria-label="距離について">?</span>
+    <div class="dist-info" id="distInfo" role="tooltip">知覚距離（小さいほど見分けが困難）。<a href="https://doi.org/10.1007/s12144-021-02664-w" target="_blank" rel="noopener">Higuchi & Kobayashi 2023</a></div>
+  </div>
+  <div class="nav-hint" id="navHint">文字をクリックして探索</div>
+
+  <svg id="graph"></svg>
+
+  <div class="card" id="infoCard">
+    <button class="close-btn" id="closeCard">✕</button>
+    <div class="kana-char" id="cardKana"></div>
+    <div class="romaji" id="cardRomaji"></div>
+  </div>
+
+  <div class="footer">
+    <span>
+      <a href="https://github.com/feeshy/kana-similarity-fdg" target="_blank" rel="noopener">コード: </a><a href="https://feeshy.top" target="_blank" rel="noopener">feeshy</a>(BSD-3)
+    </span>
+    <span class="sep">·</span>
+    <span>
+      <a href="https://doi.org/10.1007/s12144-021-02664-w" target="_blank" rel="noopener">データ: Higuchi & Kobayashi</a>(CC-BY)
+    </span>
+  </div>
+
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+  <script>
+    main().catch(e => { document.body.textContent = 'Error: ' + e.message; });
+  </script>
+  <script>
+    if ('serviceWorker' in navigator) navigator.serviceWorker.register('service-worker.js');
+  </script>
+
+</body>
+
+</html>

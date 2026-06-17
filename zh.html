@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>假名相似度力导向图 — 探索平假名与片假名的视觉相似性</title>
+  <meta name="description" content="用力导向图可视化平假名与片假名之间的视觉相似性。点击字符查看罗马音和汉字起源。">
+  <meta name="keywords" content="假名, 平假名, 片假名, 相似性, 力导向图, 可视化, 日语学习, 汉字起源">
+
+  <meta property="og:title" content="假名相似度力导向图">
+  <meta property="og:description" content="用力导向图交互探索平假名与片假名的视觉相似性。">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://kana.feeshy.top/assets/maskable.svg">
+  <meta property="og:url" content="https://kana.feeshy.top/zh">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://kana.feeshy.top/assets/maskable.svg">
+
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="manifest-zh.json">
+  <link rel="canonical" href="https://kana.feeshy.top/zh">
+  <link rel="alternate" hreflang="en" href="https://kana.feeshy.top">
+  <link rel="alternate" hreflang="ja" href="https://kana.feeshy.top/ja">
+  <link rel="alternate" hreflang="zh" href="https://kana.feeshy.top/zh">
+  <link rel="alternate" hreflang="x-default" href="https://kana.feeshy.top">
+
+  <script>
+    var lang = (navigator.language || navigator.userLanguage || '').slice(0, 2);
+    if (lang === 'en' || (lang !== 'zh' && lang !== 'ja')) location.replace('/');
+    else if (lang === 'ja') location.replace('/ja');
+  </script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "假名相似度力导向图",
+      "description": "用力导向图可视化平假名与片假名视觉相似性的交互工具。",
+      "url": "https://kana.feeshy.top/zh",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "All",
+      "author": {
+        "@type": "Person",
+        "name": "feeshy",
+        "url": "https://feeshy.top"
+      }
+    }
+  </script>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div class="filter-bar" id="filterBar">
+    <button class="filter-btn" data-filter="hiragana">平假名</button>
+    <button class="filter-btn" data-filter="katakana">片假名</button>
+    <button class="filter-btn active" data-filter="cross">交叉对比</button>
+    <span class="filter-sep"></span>
+    <button class="filter-btn toggle" id="distToggle" aria-label="切换距离标签">距离</button>
+    <span class="dist-btn" id="distInfoBtn" aria-label="关于距离">?</span>
+    <div class="dist-info" id="distInfo" role="tooltip">感知距离（越小越难分辨）。<a href="https://doi.org/10.1007/s12144-021-02664-w" target="_blank" rel="noopener">Higuchi & Kobayashi 2023</a></div>
+  </div>
+  <div class="nav-hint" id="navHint">点击字符探索</div>
+
+  <svg id="graph"></svg>
+
+  <div class="card" id="infoCard">
+    <button class="close-btn" id="closeCard">✕</button>
+    <div class="kana-char" id="cardKana"></div>
+    <div class="romaji" id="cardRomaji"></div>
+  </div>
+
+  <div class="footer">
+    <span>
+      <a href="https://github.com/feeshy/kana-similarity-fdg" target="_blank" rel="noopener">代码: </a><a href="https://feeshy.top" target="_blank" rel="noopener">feeshy</a>(BSD-3)
+    </span>
+    <span class="sep">·</span>
+    <span>
+      <a href="https://doi.org/10.1007/s12144-021-02664-w" target="_blank" rel="noopener">数据: Higuchi & Kobayashi</a>(CC-BY)
+    </span>
+  </div>
+
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+  <script>
+    main().catch(e => { document.body.textContent = 'Error: ' + e.message; });
+  </script>
+  <script>
+    if ('serviceWorker' in navigator) navigator.serviceWorker.register('service-worker.js');
+  </script>
+
+</body>
+
+</html>
