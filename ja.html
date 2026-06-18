@@ -62,6 +62,19 @@
   </div>
   <div class="nav-hint" id="navHint">文字をクリックして探索</div>
 
+  <div class="font-toggle off" id="fontToggle" role="button" tabindex="0" aria-label="フォント切替">
+    <div class="toggle-label">字体</div>
+    <div class="track">
+      <div class="thumb"></div>
+      <div class="icon-screen" title="Noto Sans">
+        <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+      </div>
+      <div class="icon-pen" title="Klee One">
+        <svg viewBox="0 0 24 24"><path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>
+      </div>
+    </div>
+  </div>
+
   <svg id="graph"></svg>
 
   <div class="card" id="infoCard">
@@ -80,7 +93,7 @@
     </span>
   </div>
 
-  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="assets/d3.v7.trimmed.js"></script>
   <script src="config.js"></script>
   <script src="app.js"></script>
   <script>

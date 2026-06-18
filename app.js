@@ -163,9 +163,12 @@ async function main() {
       .strength(l => c.link.strength / Math.max(1, l.dist / 50));
   }
   function mkForces(c) {
+    var w = width, h = height;
     return [
       d3.forceManyBody().strength(c.charge),
-      d3.forceCenter(width / 2, height / 2),
+      d3.forceX(w / 2).strength(c.centering),
+      d3.forceY(h / 2).strength(c.centering),
+      d3.forceCenter(w / 2, h / 2),
       d3.forceCollide().radius(c.collide)
     ];
   }
@@ -175,22 +178,28 @@ async function main() {
   const simH = d3.forceSimulation(hData)
     .force('link', mkLink(hLinks, cH))
     .force('charge', mkForces(cH)[0])
-    .force('center', mkForces(cH)[1])
-    .force('collide', mkForces(cH)[2])
-    .alphaDecay(cH.alphaDecay).alphaTarget(cH.alphaIdle).nodes(hData);
+    .force('x', mkForces(cH)[1])
+    .force('y', mkForces(cH)[2])
+    .force('center', mkForces(cH)[3])
+    .force('collide', mkForces(cH)[4])
+    .alphaDecay(cH.alphaDecay).alphaTarget(cH.alphaIdle).nodes(hData).stop();
 
   const simK = d3.forceSimulation(kData)
     .force('link', mkLink(kLinks, cK))
     .force('charge', mkForces(cK)[0])
-    .force('center', mkForces(cK)[1])
-    .force('collide', mkForces(cK)[2])
-    .alphaDecay(cK.alphaDecay).alphaTarget(cK.alphaIdle).nodes(kData);
+    .force('x', mkForces(cK)[1])
+    .force('y', mkForces(cK)[2])
+    .force('center', mkForces(cK)[3])
+    .force('collide', mkForces(cK)[4])
+    .alphaDecay(cK.alphaDecay).alphaTarget(cK.alphaIdle).nodes(kData).stop();
 
   const simA = d3.forceSimulation(aData)
     .force('link', mkLink(aLinks, cX))
     .force('charge', mkForces(cX)[0])
-    .force('center', mkForces(cX)[1])
-    .force('collide', mkForces(cX)[2])
+    .force('x', mkForces(cX)[1])
+    .force('y', mkForces(cX)[2])
+    .force('center', mkForces(cX)[3])
+    .force('collide', mkForces(cX)[4])
     .alphaDecay(cX.alphaDecay).alphaTarget(cX.alphaIdle).nodes(aData);
 
   let activeFilter = 'cross';
@@ -379,6 +388,10 @@ async function main() {
     const f = btn.attr('data-filter');
     activeFilter = f;
     showFilter(f);
+    simH.stop(); simK.stop(); simA.stop();
+    if (f === 'hiragana') simH.alpha(cfg('hira').alphaWake).restart();
+    else if (f === 'katakana') simK.alpha(cfg('kata').alphaWake).restart();
+    else simA.alpha(cfg('cross').alphaWake).restart();
     if (selectedNode) {
       const hide = f === 'cross' ? !aNodeIds.has(selectedNode.id)
         : f === 'hiragana' ? !hNodeIds.has(selectedNode.id)
@@ -416,3 +429,20 @@ async function main() {
       s.force('center', d3.forceCenter(width / 2, height / 2)).alpha(c.alphaWake).restart());
   });
 }
+
+(function(){
+  var btn = document.getElementById('fontToggle');
+  if (!btn) return;
+  var saved = localStorage.getItem('kana-font');
+  if (saved === 'klee') {
+    btn.classList.remove('off'); btn.classList.add('on');
+    document.body.classList.add('font-klee');
+  }
+  btn.addEventListener('click', function(){
+    var on = btn.classList.contains('on');
+    btn.classList.remove('on','off');
+    btn.classList.add(on ? 'off' : 'on');
+    document.body.classList.toggle('font-klee');
+    localStorage.setItem('kana-font', on ? 'noto' : 'klee');
+  });
+})();

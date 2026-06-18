@@ -1,8 +1,11 @@
-var CACHE = 'kana-fdg-v1';
+var CACHE = 'kana-fdg-v1.1';
 var URLS = [
   '/', '/ja.html', '/zh.html',
   'app.js', 'config.js', 'style.css',
-  'assets/data.csv'
+  'assets/data.csv',
+  'assets/d3.v7.trimmed.js',
+  'assets/NotoSansJP-400-kana.woff2',
+  'assets/KleeOne-600-kana.woff2'
 ];
 
 self.addEventListener('install', function (e) {
@@ -14,7 +17,11 @@ self.addEventListener('install', function (e) {
 });
 
 self.addEventListener('activate', function (e) {
-  e.waitUntil(clients.claim());
+  e.waitUntil(
+    caches.keys().then(function (keys) {
+      return Promise.all(keys.filter(function (k) { return k !== CACHE; }).map(function (k) { return caches.delete(k); }));
+    }).then(clients.claim)
+  );
 });
 
 self.addEventListener('fetch', function (e) {

@@ -28,7 +28,7 @@ jobs:
 
       - name: Prepare files
         run: |
-          rm -f README.md LICENSE*
+          rm -f README.md LICENSE* assets/*LICENSE* assets/*OFL*
 
       - name: Generate IndexNow Key File
         run: echo "${{ secrets.BING_INDEXNOW_KEY }}" > ${{ secrets.BING_INDEXNOW_KEY }}.txt

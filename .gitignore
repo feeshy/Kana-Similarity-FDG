@@ -1,1 +1,4 @@
 .DS_Store
+assets/*.ttf
+assets/*.otf
+node_modules
