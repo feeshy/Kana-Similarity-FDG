@@ -52,28 +52,23 @@
 <body>
 
   <div class="filter-bar" id="filterBar">
-    <button class="filter-btn" data-filter="hiragana">平仮名</button>
-    <button class="filter-btn" data-filter="katakana">片仮名</button>
-    <button class="filter-btn active" data-filter="cross">両方</button>
+    <button class="filter-btn" data-filter="hiragana" data-label="平仮名">あ</button>
+    <button class="filter-btn" data-filter="cross" data-label="両方"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="7" height="14" rx="1"/><rect x="14" y="5" width="7" height="14" rx="1"/></svg></button>
+    <button class="filter-btn" data-filter="katakana" data-label="片仮名">ア</button>
     <span class="filter-sep"></span>
-    <button class="filter-btn toggle" id="distToggle" aria-label="距離ラベル表示切替">距離</button>
-    <span class="dist-btn" id="distInfoBtn" aria-label="距離について">?</span>
-    <div class="dist-info" id="distInfo" role="tooltip">知覚距離（小さいほど見分けが困難）。<a href="https://doi.org/10.1007/s12144-021-02664-w" target="_blank" rel="noopener">Higuchi & Kobayashi 2023</a></div>
+    <button class="font-a-btn" data-font="connected" aria-label="連続筆記"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></button>
+    <button class="font-a-btn" data-font="disconnected" aria-label="断筆"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg></button>
+    <div class="font-tip" id="fontTip"></div>
   </div>
-  <div class="nav-hint" id="navHint">文字をクリックして探索</div>
-
-  <div class="font-toggle off" id="fontToggle" role="button" tabindex="0" aria-label="フォント切替">
-    <div class="toggle-label">字体</div>
-    <div class="track">
-      <div class="thumb"></div>
-      <div class="icon-screen" title="Noto Sans">
-        <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-      </div>
-      <div class="icon-pen" title="Klee One">
-        <svg viewBox="0 0 24 24"><path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>
-      </div>
+  <div class="dist-slider-bar">
+    <span class="dist-slider-val" id="distSliderVal">65</span>
+    <input type="range" id="distSlider" class="dist-slider" min="50" max="80" value="65">
+    <div class="dist-slider-foot">
+      <button class="eye-btn" id="distToggle" aria-label="距離ラベル表示切替"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
     </div>
+    <div class="dist-info" id="distInfo" role="tooltip">知覚距離：小さいほど見分けが困難</div>
   </div>
+  <div class="nav-hint" id="navHint">仮名をクリックして探索</div>
 
   <svg id="graph"></svg>
 
@@ -84,15 +79,12 @@
   </div>
 
   <div class="footer">
-    <span>
-      <a href="https://github.com/feeshy/kana-similarity-fdg" target="_blank" rel="noopener">コード: </a><a href="https://feeshy.top" target="_blank" rel="noopener">feeshy</a>(BSD-3)
-    </span>
+    <a href="https://github.com/feeshy/kana-similarity-fdg" target="_blank" rel="noopener">コード: feeshy</a>
     <span class="sep">·</span>
-    <span>
-      <a href="https://doi.org/10.1007/s12144-021-02664-w" target="_blank" rel="noopener">データ: Higuchi & Kobayashi</a>(CC-BY)
-    </span>
+    <a href="https://doi.org/10.1007/s12144-021-02664-w" target="_blank" rel="noopener">データ: Higuchi & Kobayashi</a>
   </div>
 
+  <script>var LABELS={hira:'平仮名',kata:'片仮名'};</script>
   <script src="assets/d3.v7.trimmed.js"></script>
   <script src="config.js"></script>
   <script src="app.js"></script>

@@ -1,10 +1,10 @@
-var CACHE = 'kana-fdg-v1.1';
+var CACHE = 'kana-fdg-v1.2';
 var URLS = [
   '/', '/ja.html', '/zh.html',
   'app.js', 'config.js', 'style.css',
   'assets/data.csv',
   'assets/d3.v7.trimmed.js',
-  'assets/NotoSansJP-400-kana.woff2',
+  'assets/ZenKakuGothicNew-Regular-kana.woff2',
   'assets/KleeOne-600-kana.woff2'
 ];
 

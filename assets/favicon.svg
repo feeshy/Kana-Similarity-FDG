@@ -5,14 +5,15 @@
       <stop offset="100%" stop-color="#6a9ee8"/>
     </linearGradient>
   </defs>
+  <style>@font-face{font-family:'Klee One';font-style:normal;font-weight:600;src:url(KleeOne-600-kana.woff2) format('woff2')}</style>
 
   <circle cx="40" cy="64" r="32" fill="url(#gK)" stroke="#888" stroke-width="2.5"/>
   <text x="40" y="64" text-anchor="middle" dominant-baseline="central"
-    font-family="'Noto Sans JP',sans-serif"
-    font-size="30" font-weight="500" fill="#fff">シ</text>
+    font-family="'Klee One',sans-serif"
+    font-size="30" font-weight="600" fill="#fff">シ</text>
 
   <circle cx="88" cy="64" r="32" fill="url(#gK)" stroke="#888" stroke-width="2.5"/>
   <text x="88" y="64" text-anchor="middle" dominant-baseline="central"
-    font-family="'Noto Sans JP',sans-serif"
-    font-size="30" font-weight="500" fill="#fff">ツ</text>
+    font-family="'Klee One',sans-serif"
+    font-size="30" font-weight="600" fill="#fff">ツ</text>
 </svg>

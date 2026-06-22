@@ -67,7 +67,6 @@ async function main() {
   const rows = csv.split('\n').map(r => r.split(','));
   const colIds = rows[1].slice(2).map(k => kanaToId[k.trim()]);
 
-  const distMap = {}; // all 4186 pairs → distance
   const allRaw = [];  // all pairs [source,target,distance]
 
   for (let ri = 2; ri < rows.length; ri++) {
@@ -78,10 +77,7 @@ async function main() {
       if (!v) continue;
       const cid = colIds[ci - 2];
       if (!cid) continue;
-      const d = parseInt(v);
-      distMap[rid + ':' + cid] = d;
-      distMap[cid + ':' + rid] = d;
-      allRaw.push([rid, cid, d]);
+      allRaw.push([rid, cid, parseInt(v)]);
     }
   }
 
@@ -135,7 +131,7 @@ async function main() {
 
   // ─── Zoom ────────────────────────────────────────────────
   const zoom = d3.zoom()
-    .scaleExtent([0.2, 6])
+    .scaleExtent([FORCE.zoomMin, FORCE.zoomMax])
     .on('zoom', (e) => g.attr('transform', e.transform));
   svg.call(zoom);
 
@@ -160,7 +156,7 @@ async function main() {
   function mkLink(ls, c) {
     return d3.forceLink(ls).id(d => d.id)
       .distance(l => l.dist * c.link.distScale)
-      .strength(l => c.link.strength / Math.max(1, l.dist / 50));
+      .strength(l => c.link.strength / Math.max(1, l.dist / c.link.strengthDiv));
   }
   function mkForces(c) {
     var w = width, h = height;
@@ -202,7 +198,7 @@ async function main() {
     .force('collide', mkForces(cX)[4])
     .alphaDecay(cX.alphaDecay).alphaTarget(cX.alphaIdle).nodes(aData);
 
-  let activeFilter = 'cross';
+  let activeFilter = localStorage.getItem('kana-filter') || 'cross';
 
   // ─── Tick ────────────────────────────────────────────────
   function tickDOM(map) {
@@ -230,14 +226,14 @@ async function main() {
   simA.on('tick', () => { if (activeFilter === 'cross') tickDOM(aMap); });
 
   // ─── Draw links ──────────────────────────────────────────
-  const linkEls = linkG.selectAll('line')
+  let linkEls = linkG.selectAll('line')
     .data(links).join('line')
     .attr('class', 'link')
-    .attr('stroke', FORCE.linkVisual)
-    .attr('opacity', FORCE.linkOpacity);
+    .attr('stroke', FORCE.display.linkVisual)
+    .attr('opacity', FORCE.display.linkOpacity);
 
   // link distance labels (hidden by default)
-  const linkLabel = linkG.selectAll('.link-label')
+  let linkLabel = linkG.selectAll('.link-label')
     .data(links).join('text')
     .attr('class', 'link-label')
     .attr('font-size', 12)
@@ -252,12 +248,12 @@ async function main() {
     .attr('class', 'node');
 
   nodeEls.append('circle')
-    .attr('r', FORCE.nodeRadius)
-    .attr('fill', d => d.type === 'hiragana' ? FORCE.nodeH : FORCE.nodeK);
+    .attr('r', FORCE.display.nodeRadius)
+    .attr('fill', d => d.type === 'hiragana' ? FORCE.display.nodeH : FORCE.display.nodeK);
 
   nodeEls.append('text')
     .text(d => d.kana)
-    .attr('font-size', FORCE.nodeFontSize)
+    .attr('font-size', FORCE.display.nodeFontSize)
     .attr('dy', '.35em');
 
   // ─── Drag ────────────────────────────────────────────────
@@ -295,10 +291,7 @@ async function main() {
 
   function showCard(d) {
     selectedNode = d;
-    var labels = { hira: 'HIRA', kata: 'KATA' };
-    var lang = document.documentElement.lang;
-    if (lang.startsWith('ja')) { labels.hira = '平仮名'; labels.kata = '片仮名'; }
-    else if (lang.startsWith('zh')) { labels.hira = '平假名'; labels.kata = '片假名'; }
+    var labels = LABELS || { hira: 'HIRA', kata: 'KATA' };
     const hNode = d.type === 'hiragana' ? d : romajiToKana[d.romaji]?.hiragana;
     const kNode = d.type === 'katakana' ? d : romajiToKana[d.romaji]?.katakana;
     if (hNode && kNode) {
@@ -317,7 +310,7 @@ async function main() {
 
   function hideCard() {
     selectedNode = null;
-    linkEls.classed('hl', false);
+    linkEls.classed('hl', false).style('opacity', null);
     card.classed('visible', false);
   }
 
@@ -335,10 +328,15 @@ async function main() {
     var nd = getAM()[d.id];
     if (nd) svg.transition().duration(600)
       .call(zoom.transform, d3.zoomIdentity.translate(width / 2 - nd.x, height / 2 - nd.y));
-    // highlight connected links
-    linkEls.classed('hl', l => {
-      const sid = l.source.id || l.source, tid = l.target.id || l.target;
-      return sid === d.id || tid === d.id;
+    // highlight connected links with distance-based glow
+    linkEls.classed('hl', function(l) {
+      var sid = l.source.id || l.source, tid = l.target.id || l.target;
+      var on = sid === d.id || tid === d.id;
+      if (on) {
+        var intensity = Math.max(0, Math.min(1, (HIGHLIGHT.maxDist - l.dist) / HIGHLIGHT.falloff));
+        d3.select(this).style('opacity', intensity);
+      }
+      return on;
     });
   });
 
@@ -399,26 +397,41 @@ async function main() {
       if (hide) hideCard();
     }
     resetZoom();
+    localStorage.setItem('kana-filter', f);
+    var tip = document.getElementById('fontTip');
+    tip.textContent = btn.attr('data-label');
+    tip.classList.add('show');
+    if (tip._t) clearTimeout(tip._t);
+    tip._t = setTimeout(function(){ tip.classList.remove('show'); }, 2000);
   });
+
+  function showTooltip() {
+    var info = d3.select('#distInfo');
+    info.classed('visible', true);
+    if (info._hideTimer) clearTimeout(info._hideTimer);
+    info._hideTimer = setTimeout(function(){ info.classed('visible', false); }, 5000);
+  }
 
   // dist toggle
   d3.select('#distToggle').on('click', function () {
-    const btn = d3.select(this);
-    const on = btn.classed('on');
+    var btn = d3.select(this);
+    var on = btn.classed('on');
     btn.classed('on', !on);
-    // re-run filter logic so labels respect both toggle + current filter
     showFilter(activeFilter);
+    localStorage.setItem('kana-dist-label', !on ? 'on' : 'off');
+    showTooltip();
   });
 
-  // dist info toggle
-  d3.select('#distInfoBtn').on('click', function (e) {
-    e.stopPropagation();
-    const info = d3.select('#distInfo');
-    info.classed('visible', !info.classed('visible'));
-  });
-  d3.select(document).on('click', () => d3.select('#distInfo').classed('visible', false));
-
-  showFilter('cross');
+  if (localStorage.getItem('kana-dist-label') === 'on') {
+    d3.select('#distToggle').classed('on', true);
+  }
+  filterBtns.classed('active', false);
+  filterBtns.filter(`[data-filter="${activeFilter}"]`).classed('active', true);
+  simH.stop(); simK.stop(); simA.stop();
+  if (activeFilter === 'hiragana') simH.alpha(cfg('hira').alphaWake).restart();
+  else if (activeFilter === 'katakana') simK.alpha(cfg('kata').alphaWake).restart();
+  else simA.alpha(cfg('cross').alphaWake).restart();
+  showFilter(activeFilter);
 
   // ─── Resize ──────────────────────────────────────────────
   window.addEventListener('resize', () => {
@@ -428,21 +441,101 @@ async function main() {
     [[simH, cH], [simK, cK], [simA, cX]].forEach(([s, c]) =>
       s.force('center', d3.forceCenter(width / 2, height / 2)).alpha(c.alphaWake).restart());
   });
+
+  // ─── Distance slider ─────────────────────────────────────
+  var slider = document.getElementById('distSlider');
+  var sliderVal = document.getElementById('distSliderVal');
+
+  function rebuildGraph(threshold) {
+    FORCE.hira.withinDist = threshold;
+    FORCE.kata.withinDist = threshold;
+    FORCE.cross.withinDist = threshold;
+    FORCE.cross.crossDist = threshold;
+
+    var charge = -(threshold * SLIDER.chargeA - SLIDER.chargeB);
+    FORCE.hira.charge = charge;
+    FORCE.kata.charge = charge;
+    FORCE.cross.charge = charge;
+
+    simH.stop(); simK.stop(); simA.stop();
+
+    hLinks.splice(0, hLinks.length, ...mkLS(FORCE.hira, allRaw, 'hira'));
+    kLinks.splice(0, kLinks.length, ...mkLS(FORCE.kata, allRaw, 'kata'));
+    aLinks.splice(0, aLinks.length, ...mkLS(FORCE.cross, allRaw, 'cross'));
+    visualLinks.splice(0, visualLinks.length, ...hLinks, ...kLinks, ...aLinks);
+
+    aNodeIds.clear(); hNodeIds.clear(); kNodeIds.clear();
+    aLinks.forEach(l => { aNodeIds.add(l.source); aNodeIds.add(l.target); });
+    hLinks.forEach(l => { hNodeIds.add(l.source); hNodeIds.add(l.target); });
+    kLinks.forEach(l => { kNodeIds.add(l.source); kNodeIds.add(l.target); });
+
+    var newANodes = allNodes.filter(function(d){ return aNodeIds.has(d.id); });
+    var oldAMap = Object.fromEntries(aData.map(function(d){ return [d.id, d]; }));
+    aData.splice(0, aData.length, ...newANodes.map(function(d){
+      return       oldAMap[d.id] || { ...d, x: width/2 + (Math.random()-0.5)*FORCE.nodeSpread, y: height/2 + (Math.random()-0.5)*FORCE.nodeSpread, vx: 0, vy: 0, fx: undefined, fy: undefined };
+    }));
+    for (var k in aMap) delete aMap[k];
+    aData.forEach(function(d){ aMap[d.id] = d; });
+
+    var linkKey = function(d){ return d.source + '-' + d.target; };
+    linkEls = linkG.selectAll('line')
+      .data(visualLinks, linkKey).join('line')
+      .attr('class', 'link').attr('stroke', FORCE.display.linkVisual).attr('opacity', FORCE.display.linkOpacity);
+    linkLabel = linkG.selectAll('.link-label')
+      .data(visualLinks, linkKey).join('text')
+      .attr('class', 'link-label').attr('font-size', 12).attr('text-anchor', 'middle').attr('dy', '-.3em')
+      .text(function(l){ return l.dist != null ? l.dist : ''; }).style('display', 'none');
+
+    simH.nodes(hData);
+    simH.force('link', mkLink(hLinks, cH)).force('charge', d3.forceManyBody().strength(charge))
+      .force('x', d3.forceX(width/2).strength(SLIDER.centering)).force('y', d3.forceY(height/2).strength(SLIDER.centering));
+    simK.nodes(kData);
+    simK.force('link', mkLink(kLinks, cK)).force('charge', d3.forceManyBody().strength(charge))
+      .force('x', d3.forceX(width/2).strength(SLIDER.centering)).force('y', d3.forceY(height/2).strength(SLIDER.centering));
+    simA.nodes(aData);
+    simA.force('link', mkLink(aLinks, cX)).force('charge', d3.forceManyBody().strength(charge))
+      .force('x', d3.forceX(width/2).strength(SLIDER.centering)).force('y', d3.forceY(height/2).strength(SLIDER.centering));
+
+    showFilter(activeFilter);
+    if (activeFilter === 'hiragana') simH.alpha(cH.alphaWake).restart();
+    else if (activeFilter === 'katakana') simK.alpha(cK.alphaWake).restart();
+    else simA.alpha(cX.alphaWake).restart();
+  }
+
+  if (slider) {
+    var savedT = localStorage.getItem('kana-threshold');
+    if (savedT) slider.value = savedT;
+    var t0 = parseInt(slider.value);
+    sliderVal.textContent = t0;
+    rebuildGraph(t0);
+    slider.addEventListener('input', function () {
+      var t = parseInt(this.value);
+      sliderVal.textContent = t;
+      rebuildGraph(t);
+      localStorage.setItem('kana-threshold', t);
+      showTooltip();
+    });
+  }
 }
 
 (function(){
-  var btn = document.getElementById('fontToggle');
-  if (!btn) return;
-  var saved = localStorage.getItem('kana-font');
-  if (saved === 'klee') {
-    btn.classList.remove('off'); btn.classList.add('on');
-    document.body.classList.add('font-klee');
-  }
-  btn.addEventListener('click', function(){
-    var on = btn.classList.contains('on');
-    btn.classList.remove('on','off');
-    btn.classList.add(on ? 'off' : 'on');
-    document.body.classList.toggle('font-klee');
-    localStorage.setItem('kana-font', on ? 'noto' : 'klee');
+  var saved = localStorage.getItem('kana-font') || 'connected';
+  document.querySelectorAll('.font-a-btn').forEach(function(btn){
+    if (btn.dataset.font === saved) {
+      btn.classList.add('active');
+      if (saved === 'disconnected') document.body.classList.add('font-disconnected');
+    }
+    btn.addEventListener('click', function(){
+      document.querySelectorAll('.font-a-btn').forEach(function(b){ b.classList.remove('active'); });
+      this.classList.add('active');
+      var f = this.dataset.font;
+      document.body.classList.toggle('font-disconnected', f === 'disconnected');
+      localStorage.setItem('kana-font', f);
+      var tip = document.getElementById('fontTip');
+      tip.textContent = f === 'connected' ? 'Zen Kaku Gothic New' : 'Klee One';
+      tip.classList.add('show');
+      if (tip._t) clearTimeout(tip._t);
+      tip._t = setTimeout(function(){ tip.classList.remove('show'); }, 2000);
+    });
   });
 })();
