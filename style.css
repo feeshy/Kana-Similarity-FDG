@@ -47,7 +47,7 @@ body.font-disconnected .romaji
 .ku .ku-l{font-size:11px;color:#86868b;letter-spacing:.3px;line-height:1.2}
 .ku .ku-c{font-size:56px;line-height:1.1}
 .ku .ku-o{font-size:24px;color:#1d1d1f;line-height:1.2}
-.ku-r{font-size:28px;color:#86868b;display:inline-flex;align-items:center;padding:0 12px;align-self:center}
+.ku-r{font-size:36px;display:inline-flex;align-items:center;padding:0 12px;align-self:center}
 .card .romaji{font-size:18px;color:#86868b;margin-top:2px;letter-spacing:.5px}
 .card .close-btn{
   position:absolute;top:8px;right:12px;background:none;border:none;

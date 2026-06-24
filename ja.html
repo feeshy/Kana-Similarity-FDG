@@ -4,12 +4,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>かな類似度力指向グラフ — ひらがな・カタカナの視覚的類似性を探索</title>
-  <meta name="description" content="ひらがなとカタカナの視覚的類似性を力指向グラフで可視化。文字をクリックしてローマ字や漢字由来を確認できます。">
-  <meta name="keywords" content="かな, ひらがな, カタカナ, 類似性, フォースグラフ, 可視化, 日本語学習, 漢字起源">
+  <title>かな類似度力指向グラフ — 紛らわしいひらがな・カタカナの見分け方</title>
+  <meta name="description" content="ひらがなとカタカナには、形が似ていて紛らわしい文字がたくさんあります。本ツールは力指向グラフで文字の類似度や近似度（例：ぬ-め、ほ-は、フ-ワ、シ-ツ）を可視化し、似ている仮名の違いを直感的に比較できます。文字をクリックするだけで、ローマ字、漢字由来、知覚距離を表示。紛らわしい仮名の見分けに役立ちます。">
+  <meta name="keywords" content="ひらがな, カタカナ, かな, 平仮名, 片仮名, 類似性, 類似度, 近似度, 紛らわしい, 混同, 似ている, 区別, 違い, 見分け方, 比較, 日本語学習, 漢字起源, ローマ字, 知覚距離, 覚える, 初心者, 無料, フォースグラフ, 可視化, オンラインツール, インタラクティブ, d3-js">
 
   <meta property="og:title" content="かな類似度力指向グラフ">
-  <meta property="og:description" content="ひらがなとカタカナの視覚的類似性を力指向グラフでインタラクティブに探索。">
+  <meta property="og:description" content="ひらがなとカタカナには、形が似ていて紛らわしい文字がたくさんあります。本ツールは力指向グラフで文字の類似度や近似度（例：ぬ-め、ほ-は、フ-ワ、シ-ツ）を可視化し、似ている仮名の違いを直感的に比較できます。文字をクリックするだけで、ローマ字、漢字由来、知覚距離を表示。紛らわしい仮名の見分けに役立ちます。">
   <meta property="og:type" content="website">
   <meta property="og:image" content="https://kana.feeshy.top/assets/maskable.svg">
   <meta property="og:url" content="https://kana.feeshy.top/ja">
@@ -34,7 +34,7 @@
       "@context": "https://schema.org",
       "@type": "WebApplication",
       "name": "かな類似度力指向グラフ",
-      "description": "ひらがなとカタカナの視覚的類似性を力指向グラフで可視化するインタラクティブツール。",
+      "description": "ひらがなとカタカナには、形が似ていて紛らわしい文字がたくさんあります。本ツールは力指向グラフで文字の類似度や近似度（例：ぬ-め、ほ-は、フ-ワ、シ-ツ）を可視化し、似ている仮名の違いを直感的に比較できます。文字をクリックするだけで、ローマ字、漢字由来、知覚距離を表示。紛らわしい仮名の見分けに役立ちます。",
       "url": "https://kana.feeshy.top/ja",
       "applicationCategory": "EducationalApplication",
       "operatingSystem": "All",
@@ -52,12 +52,12 @@
 <body>
 
   <div class="filter-bar" id="filterBar">
-    <button class="filter-btn" data-filter="hiragana" data-label="平仮名">あ</button>
-    <button class="filter-btn" data-filter="cross" data-label="両方"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="7" height="14" rx="1"/><rect x="14" y="5" width="7" height="14" rx="1"/></svg></button>
-    <button class="filter-btn" data-filter="katakana" data-label="片仮名">ア</button>
+    <button class="filter-btn" data-filter="hiragana" data-label="ひらがな">あ</button>
+    <button class="filter-btn" data-filter="cross" data-label="交差比較"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="7" height="14" rx="1"/><rect x="14" y="5" width="7" height="14" rx="1"/></svg></button>
+    <button class="filter-btn" data-filter="katakana" data-label="カタカナ">ア</button>
     <span class="filter-sep"></span>
-    <button class="font-a-btn" data-font="connected" aria-label="連続筆記"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></button>
-    <button class="font-a-btn" data-font="disconnected" aria-label="断筆"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg></button>
+    <button class="font-a-btn" data-font="connected" aria-label="標準（印刷体）"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></button>
+    <button class="font-a-btn" data-font="disconnected" aria-label="教科書体"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg></button>
     <div class="font-tip" id="fontTip"></div>
   </div>
   <div class="dist-slider-bar">
@@ -66,9 +66,9 @@
     <div class="dist-slider-foot">
       <button class="eye-btn" id="distToggle" aria-label="距離ラベル表示切替"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
     </div>
-    <div class="dist-info" id="distInfo" role="tooltip">知覚距離：小さいほど見分けが困難</div>
+    <div class="dist-info" id="distInfo" role="tooltip">知覚距離：小さいほど区別が難しくなります</div>
   </div>
-  <div class="nav-hint" id="navHint">仮名をクリックして探索</div>
+  <div class="nav-hint" id="navHint">仮名をクリックしてみよう</div>
 
   <svg id="graph"></svg>
 
@@ -79,12 +79,12 @@
   </div>
 
   <div class="footer">
-    <a href="https://github.com/feeshy/kana-similarity-fdg" target="_blank" rel="noopener">コード: feeshy</a>
+    <a href="https://github.com/feeshy/kana-similarity-fdg" target="_blank" rel="noopener">Code: feeshy</a>
     <span class="sep">·</span>
-    <a href="https://doi.org/10.1007/s12144-021-02664-w" target="_blank" rel="noopener">データ: Higuchi & Kobayashi</a>
+    <a href="https://doi.org/10.1007/s12144-021-02664-w" target="_blank" rel="noopener">Data: Higuchi & Kobayashi</a>
   </div>
 
-  <script>var LABELS={hira:'平仮名',kata:'片仮名'};</script>
+  <script>var LABELS={hira:'ひらがな',kata:'カタカナ'};</script>
   <script src="assets/d3.v7.trimmed.js"></script>
   <script src="config.js"></script>
   <script src="app.js"></script>

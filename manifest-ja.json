@@ -1,6 +1,6 @@
 {
   "name": "かな類似度力指向グラフ",
-  "short_name": "かな類似図",
+  "short_name": "かな類似度",
   "start_url": "/ja",
   "display": "standalone",
   "background_color": "#f5f5f7",
