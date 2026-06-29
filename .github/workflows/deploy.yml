@@ -33,6 +33,40 @@ jobs:
       - name: Generate IndexNow Key File
         run: echo "${{ secrets.BING_INDEXNOW_KEY }}" > ${{ secrets.BING_INDEXNOW_KEY }}.txt
 
+      - name: Generate sitemap.xml
+        run: |
+          BUILD_DATE=$(date -u +"%Y-%m-%d")
+          cat <<EOF > sitemap.xml
+          <?xml version="1.0" encoding="UTF-8"?>
+          <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+                  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+            <url>
+              <loc>https://kana.feeshy.top/</loc>
+              <lastmod>${BUILD_DATE}</lastmod>
+              <xhtml:link rel="alternate" hreflang="en" href="https://kana.feeshy.top/"/>
+              <xhtml:link rel="alternate" hreflang="ja" href="https://kana.feeshy.top/ja"/>
+              <xhtml:link rel="alternate" hreflang="zh" href="https://kana.feeshy.top/zh"/>
+              <xhtml:link rel="alternate" hreflang="x-default" href="https://kana.feeshy.top/"/>
+            </url>
+            <url>
+              <loc>https://kana.feeshy.top/ja</loc>
+              <lastmod>${BUILD_DATE}</lastmod>
+              <xhtml:link rel="alternate" hreflang="en" href="https://kana.feeshy.top/"/>
+              <xhtml:link rel="alternate" hreflang="ja" href="https://kana.feeshy.top/ja"/>
+              <xhtml:link rel="alternate" hreflang="zh" href="https://kana.feeshy.top/zh"/>
+              <xhtml:link rel="alternate" hreflang="x-default" href="https://kana.feeshy.top/"/>
+            </url>
+            <url>
+              <loc>https://kana.feeshy.top/zh</loc>
+              <lastmod>${BUILD_DATE}</lastmod>
+              <xhtml:link rel="alternate" hreflang="en" href="https://kana.feeshy.top/"/>
+              <xhtml:link rel="alternate" hreflang="ja" href="https://kana.feeshy.top/ja"/>
+              <xhtml:link rel="alternate" hreflang="zh" href="https://kana.feeshy.top/zh"/>
+              <xhtml:link rel="alternate" hreflang="x-default" href="https://kana.feeshy.top/"/>
+            </url>
+          </urlset>
+          EOF
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5
         with:
