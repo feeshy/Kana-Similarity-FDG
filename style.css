@@ -184,7 +184,7 @@ body.font-disconnected .romaji
 .bp-sep{opacity:.2;margin:0 1px}
 .rh-ba{font-size:12px;color:#d63d3d}
 .rh-pa{font-size:10px;color:#3d7bd6}
-.cell{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6px 2px;border-radius:8px;background:rgba(255,255,255,.75);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);min-height:56px}
+.cell{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6px 1px;border-radius:8px;background:rgba(255,255,255,.75);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);min-height:56px}
 .cell .kana-pair{display:flex;align-items:baseline;gap:3px;line-height:1.1}
 .cell .hira{font-size:20px;color:#d63d3d;line-height:1}
 .cell .kata{font-size:20px;color:#3d7bd6;line-height:1}
@@ -194,7 +194,7 @@ body.font-disconnected .romaji
 .cell.ghost{opacity:.28}
 .cell.ghost .hira,.cell.ghost .kata{font-size:17px}
 .cell.ghost .sub{font-size:9px}
-.cell.sokuon .hira,.cell.sokuon .kata{font-size:17px;letter-spacing:-.3px}
+.cell.sokuon .hira,.cell.sokuon .kata{font-size:16px;letter-spacing:-.3px}
 .cell.sokuon .kana-pair{gap:1px}
 .cell.ycell .hira,.cell.ycell .kata{font-size:17px;letter-spacing:-.3px}
 .cell.ycell .kana-pair{gap:1px}
@@ -219,13 +219,13 @@ body.font-disconnected .cell .sub-origin{font-family:'Klee One',sans-serif!impor
 @media(max-width:420px){
   .cell .hira,.cell .kata{font-size:16px}
   .cell .sub,.cell .sub-origin{font-size:9px}
-  .cell{min-height:48px;padding:4px 1px}
+  .cell{min-height:48px;padding:4px 0}
   .kana-grid{gap:2px;grid-template-columns:24px repeat(5,1fr);grid-auto-rows:48px}
   .col-header,.row-header{font-size:10px}
-  .cell.sokuon .hira,.cell.sokuon .kata,.cell.ycell .hira,.cell.ycell .kata{font-size:12px;letter-spacing:-.5px}
+  .cell.sokuon .hira,.cell.sokuon .kata,.cell.ycell .hira,.cell.ycell .kata{font-size:11px;letter-spacing:-.5px}
   .cell.sokuon .kana-pair,.cell.ycell .kana-pair{gap:0}
   .cell.empty{min-height:48px}
-  .cell.dual{padding:2px 1px}
+  .cell.dual{padding:2px 0}
   .dual-main .hira,.dual-main .kata{font-size:13px}
   .dual-sub .hira,.dual-sub .kata{font-size:11px}
   .dual-main .sub,.dual-sub .sub,.dual-main .sub-origin,.dual-sub .sub-origin{font-size:7px}
