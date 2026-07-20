@@ -21,14 +21,14 @@
   ],
   "shortcuts": [
     {
-      "name": "類似度グラフ",
+      "name": "類似度",
       "short_name": "類似度",
       "description": "力指向グラフで仮名の知覚距離を探索",
       "url": "/ja/",
-      "icons": [{ "src": "/assets/maskable.svg", "sizes": "any" }]
+      "icons": [{ "src": "/assets/favicon.svg", "sizes": "any" }]
     },
     {
-      "name": "五十音図",
+      "name": "五十音",
       "short_name": "五十音",
       "description": "清音・濁音・拗音・促音を網羅した五十音図",
       "url": "/ja/chart",

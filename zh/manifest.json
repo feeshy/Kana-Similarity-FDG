@@ -21,14 +21,14 @@
   ],
   "shortcuts": [
     {
-      "name": "相似度图",
+      "name": "相似度",
       "short_name": "相似度",
       "description": "借助力导向图探索假名感知距离",
       "url": "/zh/",
-      "icons": [{ "src": "/assets/maskable.svg", "sizes": "any" }]
+      "icons": [{ "src": "/assets/favicon.svg", "sizes": "any" }]
     },
     {
-      "name": "五十音图",
+      "name": "五十音",
       "short_name": "五十音",
       "description": "完整的五十音图表，包含清音/浊音/拗音/促音",
       "url": "/zh/chart",

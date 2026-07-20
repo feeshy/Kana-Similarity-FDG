@@ -21,14 +21,14 @@
   ],
   "shortcuts": [
     {
-      "name": "Similarity Graph",
+      "name": "Similarity",
       "short_name": "Similarity",
       "description": "Explore kana perceptual distances on a force-directed graph",
       "url": "/en/",
-      "icons": [{ "src": "/assets/maskable.svg", "sizes": "any" }]
+      "icons": [{ "src": "/assets/favicon.svg", "sizes": "any" }]
     },
     {
-      "name": "Gojūon Chart",
+      "name": "Gojūon",
       "short_name": "Gojūon",
       "description": "Complete gojūon table with all kana forms",
       "url": "/en/chart",
