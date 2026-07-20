@@ -185,8 +185,8 @@ body.font-disconnected .romaji
 .bp-sep{opacity:.2;margin:0 1px}
 .rh-ba{font-size:12px;color:#d63d3d}
 .rh-pa{font-size:10px;color:#3d7bd6}
-.cell{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6px 1px;border-radius:8px;background:rgba(255,255,255,.75);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);min-height:56px}
-.cell .kana-pair{display:flex;align-items:baseline;gap:3px;line-height:1.1}
+.cell{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6px 1px;border-radius:8px;background:rgba(255,255,255,.75);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);min-height:56px;overflow:hidden}
+.cell .kana-pair{display:flex;align-items:baseline;gap:3px;line-height:1.1;white-space:nowrap}
 .cell .hira{font-size:20px;color:#d63d3d;line-height:1}
 .cell .kata{font-size:20px;color:#3d7bd6;line-height:1}
 .cell .sub{font-size:10px;color:#86868b;margin-top:2px;text-align:center;line-height:1}
