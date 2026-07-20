@@ -1,7 +1,7 @@
 {
   "name": "假名相似度力导向图",
   "short_name": "假名相似度",
-  "start_url": "/zh",
+  "start_url": "/zh/",
   "display": "standalone",
   "background_color": "#f5f5f7",
   "theme_color": "#1d1d1f",
@@ -24,7 +24,7 @@
       "name": "相似度图",
       "short_name": "相似度",
       "description": "借助力导向图探索假名感知距离",
-      "url": "/zh",
+      "url": "/zh/",
       "icons": [{ "src": "/assets/maskable.svg", "sizes": "any" }]
     },
     {

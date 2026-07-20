@@ -1,7 +1,7 @@
 {
   "name": "Kana Similarity FDG",
   "short_name": "Kana Similarity",
-  "start_url": "/en",
+  "start_url": "/en/",
   "display": "standalone",
   "background_color": "#f5f5f7",
   "theme_color": "#1d1d1f",
@@ -24,7 +24,7 @@
       "name": "Similarity Graph",
       "short_name": "Similarity",
       "description": "Explore kana perceptual distances on a force-directed graph",
-      "url": "/en",
+      "url": "/en/",
       "icons": [{ "src": "/assets/maskable.svg", "sizes": "any" }]
     },
     {

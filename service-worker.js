@@ -68,7 +68,7 @@ self.addEventListener('fetch', (e) => {
       if (normPath === '/' || normPath === '/index.html') {
         const lang = (navigator.language || '').toLowerCase().slice(0, 2);
         if (lang === 'ja' || lang === 'zh') {
-          return Response.redirect(new URL(`/${lang}`, self.location.origin).href, 302);
+          return Response.redirect(new URL(`/${lang}/`, self.location.origin).href, 302);
         }
       }
 
