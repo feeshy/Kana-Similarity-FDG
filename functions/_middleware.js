@@ -18,10 +18,10 @@ export async function onRequest(context) {
       const acceptLang = request.headers.get('Accept-Language') || '';
       const lowLang = acceptLang.toLowerCase();
       if (lowLang.startsWith('ja')) {
-        return Response.redirect(new URL('/ja', request.url), 302);
+        return Response.redirect(new URL('/ja/', request.url), 302);
       }
       if (lowLang.startsWith('zh')) {
-        return Response.redirect(new URL('/zh', request.url), 302);
+        return Response.redirect(new URL('/zh/', request.url), 302);
       }
     }
   }
