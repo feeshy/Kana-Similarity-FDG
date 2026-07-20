@@ -24,11 +24,16 @@ self.addEventListener('install', (e) => {
       } catch (e) {}
 
       // Precache current language pages (offline-first visit)
-      for (const page of [`/${lang}`, `/${lang}/chart`]) {
+      // FDG: always with trailing slash /en/ — chart: always without /en/chart
+      for (const page of [`/${lang}/`, `/${lang}/chart`]) {
         try {
           const res = await fetch(`${page}?sw-bypass=1`);
           if (res.ok && !res.redirected) {
-            const cleanRes = new Response(await res.blob(), { headers: res.headers });
+            const blob = await res.blob();
+            const h = new Headers(res.headers);
+            h.delete('Content-Encoding');
+            h.delete('Content-Length');
+            const cleanRes = new Response(blob, { headers: h });
             await cache.put(page, cleanRes);
           }
         } catch (err) { /* page may not exist yet, skip */ }
@@ -61,13 +66,15 @@ self.addEventListener('fetch', (e) => {
   // A. Handle Navigation Requests (HTML pages)
   if (req.mode === 'navigate') {
     e.respondWith((async () => {
-      // Normalize trailing slash: /ja/ → /ja, /en/chart/ → /en/chart
-      const normPath = pathname.replace(/\/$/, '') || '/';
+      // Normalize: FDG redirect /en → /en/, chart strip /en/chart/ → /en/chart
+      const normPath = /^\/(en|ja|zh)(\/)?$/.test(pathname)
+        ? pathname.replace(/\/+$/, '/')
+        : pathname.replace(/\/$/, '') || '/';
 
       // SW-level redirect on root path / based solely on browser language
       if (normPath === '/' || normPath === '/index.html') {
         const lang = (navigator.language || '').toLowerCase().slice(0, 2);
-        if (lang === 'ja' || lang === 'zh') {
+        if (lang === 'en' || lang === 'ja' || lang === 'zh') {
           return Response.redirect(new URL(`/${lang}/`, self.location.origin).href, 302);
         }
       }
