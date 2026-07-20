@@ -1,0 +1,38 @@
+{
+  "name": "Kana Similarity FDG",
+  "short_name": "Kana Similarity",
+  "start_url": "/en",
+  "display": "standalone",
+  "background_color": "#f5f5f7",
+  "theme_color": "#1d1d1f",
+  "icons": [
+    {
+      "src": "/assets/maskable.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/assets/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Similarity Graph",
+      "short_name": "Similarity",
+      "description": "Explore kana perceptual distances on a force-directed graph",
+      "url": "/en",
+      "icons": [{ "src": "/assets/maskable.svg", "sizes": "any" }]
+    },
+    {
+      "name": "Gojūon Chart",
+      "short_name": "Gojūon",
+      "description": "Complete gojūon table with all kana forms",
+      "url": "/en/chart",
+      "icons": [{ "src": "/assets/favicon.svg", "sizes": "any" }]
+    }
+  ]
+}

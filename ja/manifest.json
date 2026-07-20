@@ -1,0 +1,38 @@
+{
+  "name": "かな類似度力指向グラフ",
+  "short_name": "かな類似度",
+  "start_url": "/ja",
+  "display": "standalone",
+  "background_color": "#f5f5f7",
+  "theme_color": "#1d1d1f",
+  "icons": [
+    {
+      "src": "/assets/maskable.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/assets/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "類似度グラフ",
+      "short_name": "類似度",
+      "description": "力指向グラフで仮名の知覚距離を探索",
+      "url": "/ja",
+      "icons": [{ "src": "/assets/maskable.svg", "sizes": "any" }]
+    },
+    {
+      "name": "五十音図",
+      "short_name": "五十音",
+      "description": "清音・濁音・拗音・促音を網羅した五十音図",
+      "url": "/ja/chart",
+      "icons": [{ "src": "/assets/favicon.svg", "sizes": "any" }]
+    }
+  ]
+}

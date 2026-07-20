@@ -17,14 +17,13 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="https://kana.feeshy.top/assets/maskable.svg">
 
-  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="manifest" href="manifest-ja.json">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="manifest.json">
   <link rel="canonical" href="https://kana.feeshy.top/ja">
-  <link rel="alternate" hreflang="en" href="https://kana.feeshy.top">
+  <link rel="alternate" hreflang="en" href="https://kana.feeshy.top/en">
   <link rel="alternate" hreflang="ja" href="https://kana.feeshy.top/ja">
   <link rel="alternate" hreflang="zh" href="https://kana.feeshy.top/zh">
-  <link rel="alternate" hreflang="x-default" href="https://kana.feeshy.top">
-
+  <link rel="alternate" hreflang="x-default" href="https://kana.feeshy.top/en">
 
   <script type="application/ld+json">
     {
@@ -43,11 +42,13 @@
     }
   </script>
 
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../style.css">
+  <style>body{overflow:hidden!important;height:100vh!important}</style>
 </head>
 
 <body>
 
+  <div class="page-nav"><strong>類似度</strong> <span class="pn-sep">|</span> <a href="chart.html">五十音</a></div>
   <div class="filter-bar" id="filterBar">
     <button class="filter-btn" data-filter="hiragana" data-label="ひらがな">あ</button>
     <button class="filter-btn" data-filter="cross" data-label="交差比較"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="7" height="14" rx="1"/><rect x="14" y="5" width="7" height="14" rx="1"/></svg></button>
@@ -82,11 +83,9 @@
   </div>
 
   <script>var LABELS={hira:'ひらがな',kata:'カタカナ'};</script>
-  <script src="assets/d3.v7.trimmed.js"></script>
-  <script src="config.js"></script>
-  <script src="app.js"></script>
-  <script>
-    main().catch(e => { document.body.textContent = 'Error: ' + e.message; });
+  <script src="../assets/d3.v7.trimmed.js"></script>
+  <script src="../fdg.js"></script>
+  <script src="../app.js"></script>
   </script>
 
 </body>

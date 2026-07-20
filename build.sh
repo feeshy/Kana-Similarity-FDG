@@ -9,26 +9,58 @@ cat <<EOF > sitemap.xml
   <url>
     <loc>https://kana.feeshy.top/</loc>
     <lastmod>${BUILD_DATE}</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kana.feeshy.top/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kana.feeshy.top/en"/>
     <xhtml:link rel="alternate" hreflang="ja" href="https://kana.feeshy.top/ja"/>
     <xhtml:link rel="alternate" hreflang="zh" href="https://kana.feeshy.top/zh"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kana.feeshy.top/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kana.feeshy.top/en"/>
+  </url>
+  <url>
+    <loc>https://kana.feeshy.top/en</loc>
+    <lastmod>${BUILD_DATE}</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kana.feeshy.top/en"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://kana.feeshy.top/ja"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://kana.feeshy.top/zh"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kana.feeshy.top/en"/>
   </url>
   <url>
     <loc>https://kana.feeshy.top/ja</loc>
     <lastmod>${BUILD_DATE}</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kana.feeshy.top/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kana.feeshy.top/en"/>
     <xhtml:link rel="alternate" hreflang="ja" href="https://kana.feeshy.top/ja"/>
     <xhtml:link rel="alternate" hreflang="zh" href="https://kana.feeshy.top/zh"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kana.feeshy.top/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kana.feeshy.top/en"/>
   </url>
   <url>
     <loc>https://kana.feeshy.top/zh</loc>
     <lastmod>${BUILD_DATE}</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kana.feeshy.top/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kana.feeshy.top/en"/>
     <xhtml:link rel="alternate" hreflang="ja" href="https://kana.feeshy.top/ja"/>
     <xhtml:link rel="alternate" hreflang="zh" href="https://kana.feeshy.top/zh"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kana.feeshy.top/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kana.feeshy.top/en"/>
+  </url>
+  <url>
+    <loc>https://kana.feeshy.top/en/chart</loc>
+    <lastmod>${BUILD_DATE}</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kana.feeshy.top/en/chart"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://kana.feeshy.top/ja/chart"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://kana.feeshy.top/zh/chart"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kana.feeshy.top/en/chart"/>
+  </url>
+  <url>
+    <loc>https://kana.feeshy.top/ja/chart</loc>
+    <lastmod>${BUILD_DATE}</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kana.feeshy.top/en/chart"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://kana.feeshy.top/ja/chart"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://kana.feeshy.top/zh/chart"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kana.feeshy.top/en/chart"/>
+  </url>
+  <url>
+    <loc>https://kana.feeshy.top/zh/chart</loc>
+    <lastmod>${BUILD_DATE}</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kana.feeshy.top/en/chart"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://kana.feeshy.top/ja/chart"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://kana.feeshy.top/zh/chart"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kana.feeshy.top/en/chart"/>
   </url>
 </urlset>
 EOF

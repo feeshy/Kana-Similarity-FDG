@@ -6,11 +6,29 @@ Interactive force-directed graph revealing which hiragana and katakana look alik
 
 visit the [live site](https://kana.feeshy.top).
 
+### Similarity Graph
+
 - **Drag** nodes to rearrange
 - **Scroll** or **pinch** to zoom, **click & drag** background to pan
 - **Click a character** to view its romaji reading and kanji origin
 - **Filter** between Hiragana / Katakana / Cross modes
 - **DIST** toggle shows perceptual distance labels on links
+
+### Gojūon Chart
+
+An interactive [gojūon chart](https://kana.feeshy.top/en/chart) displaying all hiragana and katakana in the traditional 10×5 grid, in three languages:
+
+| Language | FDG Graph | Chart |
+|----------|-----------|-------|
+| English  | [/en](https://kana.feeshy.top/en) | [/en/chart](https://kana.feeshy.top/en/chart) |
+| Japanese | [/ja](https://kana.feeshy.top/ja) | [/ja/chart](https://kana.feeshy.top/ja/chart) |
+| Chinese  | [/zh](https://kana.feeshy.top/zh) | [/zh/chart](https://kana.feeshy.top/zh/chart) |
+
+Features on the chart page:
+- **Tab switching** between Seion (plain), Dakuon (voiced), Sokuon (geminate) and Yōon (palatalized) forms
+- **Font toggle** between print style (Zen Kaku Gothic New) and handwriting style (Klee One)
+- **Interactive row header**: click ば/ぱ on the は-row to toggle between voiced and half-voiced forms
+- **Page navigation** between chart and similarity graph via the top bar
 
 ## License
 

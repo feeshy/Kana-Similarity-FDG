@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>五十音図 — ひらがな・カタカナ・ローマ字</title>
+  <meta name="description" content="清音・濁音・半濁音・拗音・促音を網羅した五十音図。すべての仮名のひらがな・カタカナ・ローマ字を同時表示。手書き体フォントと漢字由来表示に対応。">
+
+  <meta property="og:title" content="五十音図 — ひらがな・カタカナ・ローマ字">
+  <meta property="og:description" content="清音・濁音・半濁音・拗音・促音を網羅した五十音図。すべての仮名のひらがな・カタカナ・ローマ字を同時表示。手書き体フォントと漢字由来表示に対応。">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://kana.feeshy.top/assets/maskable.svg">
+  <meta property="og:url" content="https://kana.feeshy.top/ja/chart">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://kana.feeshy.top/assets/maskable.svg">
+
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="canonical" href="https://kana.feeshy.top/ja/chart">
+  <link rel="alternate" hreflang="en" href="https://kana.feeshy.top/en/chart">
+  <link rel="alternate" hreflang="ja" href="https://kana.feeshy.top/ja/chart">
+  <link rel="alternate" hreflang="zh" href="https://kana.feeshy.top/zh/chart">
+  <link rel="alternate" hreflang="x-default" href="https://kana.feeshy.top/en/chart">
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "五十音図",
+      "description": "清音・濁音・半濁音・拗音・促音を網羅した五十音図。すべての仮名のひらがな・カタカナ・ローマ字を同時表示。手書き体フォントと漢字由来表示に対応。",
+      "url": "https://kana.feeshy.top/ja/chart",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "All",
+      "author": {
+        "@type": "Person",
+        "name": "feeshy",
+        "url": "https://feeshy.top"
+      }
+    }
+  </script>
+
+  <link rel="stylesheet" href="../style.css">
+  </head>
+
+<body>
+
+  <div class="page-nav"><a href="./">類似度</a> <span class="pn-sep">|</span> <strong>五十音</strong></div>
+  <div class="filter-bar" id="filterBar">
+    <button class="mode-btn" data-mode="seion">清音</button>
+    <button class="mode-btn" data-mode="dakuon">濁音</button>
+    <button class="mode-btn" data-mode="sokuon">促音</button>
+    <button class="mode-btn" data-mode="yoon">拗音</button>
+    <span class="filter-sep"></span>
+    <button class="font-a-btn" data-font="connected" aria-label="Connected"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></button>
+    <button class="font-a-btn" data-font="disconnected" aria-label="Disconnected"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg></button>
+    <div class="font-tip" id="fontTip"><span class="sep">·</span>
+      <a href="../">かな類似度力指向グラフ</a>
+    </div>
+  </div>
+
+  <div class="chart-wrap" id="chartWrap">
+    <div class="footer">
+      <a href="https://github.com/feeshy/kana-similarity-fdg" target="_blank" rel="noopener">コード: feeshy</a>
+    </div>
+  </div>
+
+  <script src="../app.js"></script>
+  <script src="../chart.js"></script>
+</body>
+</html>

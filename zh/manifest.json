@@ -1,0 +1,38 @@
+{
+  "name": "假名相似度力导向图",
+  "short_name": "假名相似度",
+  "start_url": "/zh",
+  "display": "standalone",
+  "background_color": "#f5f5f7",
+  "theme_color": "#1d1d1f",
+  "icons": [
+    {
+      "src": "/assets/maskable.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/assets/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "相似度图",
+      "short_name": "相似度",
+      "description": "借助力导向图探索假名感知距离",
+      "url": "/zh",
+      "icons": [{ "src": "/assets/maskable.svg", "sizes": "any" }]
+    },
+    {
+      "name": "五十音图",
+      "short_name": "五十音",
+      "description": "完整的五十音图表，包含清音/浊音/拗音/促音",
+      "url": "/zh/chart",
+      "icons": [{ "src": "/assets/favicon.svg", "sizes": "any" }]
+    }
+  ]
+}

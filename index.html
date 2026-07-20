@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kana Similarity FDG — Distinguish Hiragana & Katakana</title>
+  <title>Kana Similarity FDG — Distinguish Hiragana &amp; Katakana</title>
   <meta name="description" content="Learn to distinguish similar hiragana and katakana on a force-directed graph by exploring their romaji readings and kanji origins. Discover perceptual distance and visual differences between confusing kana pairs (e.g. ぬ-め, ほ-は, フ-ワ, シ-ツ).">
   <meta name="keywords" content="hiragana, katakana, similar, confusing, distinguish, difference, learn, japanese, kana, kanji, perceptual similarity, visual similarity, visual difference, force-directed graph, romaji reading, kanji origin, perceptual distance, d3-js">
   <meta name="baidu-site-verification" content="codeva-JeKZHypDxq" />
@@ -19,14 +18,14 @@
   <meta name="twitter:image" content="https://kana.feeshy.top/assets/maskable.svg">
 
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="manifest" href="manifest-en.json">
+  <link rel="manifest" href="/en/manifest.json">
   <link rel="canonical" href="https://kana.feeshy.top">
-  <link rel="alternate" hreflang="en" href="https://kana.feeshy.top">
+  <link rel="alternate" hreflang="en" href="https://kana.feeshy.top/en">
   <link rel="alternate" hreflang="ja" href="https://kana.feeshy.top/ja">
   <link rel="alternate" hreflang="zh" href="https://kana.feeshy.top/zh">
-  <link rel="alternate" hreflang="x-default" href="https://kana.feeshy.top">
+  <link rel="alternate" hreflang="x-default" href="https://kana.feeshy.top/en">
 
-
+  <link rel="stylesheet" href="style.css">
 
   <script type="application/ld+json">
     {
@@ -45,52 +44,19 @@
     }
   </script>
 
-  <link rel="stylesheet" href="style.css">
-</head>
-
-<body>
-
-  <div class="filter-bar" id="filterBar">
-    <button class="filter-btn" data-filter="hiragana" data-label="Hiragana">あ</button>
-    <button class="filter-btn" data-filter="cross" data-label="All"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="7" height="14" rx="1"/><rect x="14" y="5" width="7" height="14" rx="1"/></svg></button>
-    <button class="filter-btn" data-filter="katakana" data-label="Katakana">ア</button>
-    <span class="filter-sep"></span>
-    <button class="font-a-btn" data-font="connected" aria-label="Connected"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></button>
-    <button class="font-a-btn" data-font="disconnected" aria-label="Disconnected"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg></button>
-    <div class="font-tip" id="fontTip"></div>
-  </div>
-  <div class="dist-slider-bar">
-    <span class="dist-slider-val" id="distSliderVal">65</span>
-    <input type="range" id="distSlider" class="dist-slider" min="50" max="80" value="65">
-    <div class="dist-slider-foot">
-      <button class="eye-btn" id="distToggle" aria-label="Toggle distance labels"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
-    </div>
-    <div class="dist-info" id="distInfo" role="tooltip">Perceptual distance: smaller = harder to distinguish</div>
-  </div>
-  <div class="nav-hint" id="navHint">click a kana to explore</div>
-
-  <svg id="graph"></svg>
-
-  <div class="card" id="infoCard">
-    <button class="close-btn" id="closeCard">✕</button>
-    <div class="kana-char" id="cardKana"></div>
-    <div class="romaji" id="cardRomaji"></div>
-  </div>
-
-  <div class="footer">
-    <a href="https://github.com/feeshy/kana-similarity-fdg" target="_blank" rel="noopener">Code</a>: <a href="https://feeshy.top" target="_blank" rel="noopener">feeshy</a>
-    <span class="sep">·</span>
-    <a href="https://doi.org/10.1007/s12144-021-02664-w" target="_blank" rel="noopener">Data: Higuchi &amp; Kobayashi</a>
-  </div>
-
-  <script>var LABELS={hira:'HIRA',kata:'KATA'};</script>
-  <script src="assets/d3.v7.trimmed.js"></script>
-  <script src="config.js"></script>
-  <script src="app.js"></script>
   <script>
-    main().catch(e => { document.body.textContent = 'Error: ' + e.message; });
+    var lang = (navigator.language || navigator.userLanguage || "").substring(0, 2);
+    var url = {"ja": "/ja", "zh": "/zh"}[lang] || "/en";
+    location.href = url;
   </script>
-
+  <style>
+    body{overflow:auto!important;height:auto!important;display:flex;align-items:center;justify-content:center}
+    .lang-links a{color:#86868b;text-decoration:none;margin:0 4px}
+    .lang-links a:hover{color:#1d1d1f}
+    @media(prefers-color-scheme:dark){.lang-links a{color:#98989d}.lang-links a:hover{color:#f5f5f7}}
+  </style>
+</head>
+<body>
+  <div class="lang-links"><a href="/en">English</a> <span style="opacity:.3">·</span> <a href="/ja">日本語</a> <span style="opacity:.3">·</span> <a href="/zh">中文</a></div>
 </body>
-
 </html>

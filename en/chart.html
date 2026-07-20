@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gojūon Chart — Hiragana, Katakana, Romaji</title>
+  <meta name="description" content="Complete Japanese gojūon chart covering seion, dakuon, handakuon, yōon, and sokuon. Each kana displays hiragana, katakana, and romaji side by side.">
+
+  <meta property="og:title" content="Gojūon Chart — Hiragana, Katakana, Romaji">
+  <meta property="og:description" content="Complete Japanese gojūon chart covering seion, dakuon, handakuon, yōon, and sokuon. Each kana displays hiragana, katakana, and romaji side by side.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://kana.feeshy.top/assets/maskable.svg">
+  <meta property="og:url" content="https://kana.feeshy.top/en/chart">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://kana.feeshy.top/assets/maskable.svg">
+
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="canonical" href="https://kana.feeshy.top/en/chart">
+  <link rel="alternate" hreflang="en" href="https://kana.feeshy.top/en/chart">
+  <link rel="alternate" hreflang="ja" href="https://kana.feeshy.top/ja/chart">
+  <link rel="alternate" hreflang="zh" href="https://kana.feeshy.top/zh/chart">
+  <link rel="alternate" hreflang="x-default" href="https://kana.feeshy.top/en/chart">
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Gojūon Chart",
+      "description": "Complete Japanese gojūon chart covering seion, dakuon, handakuon, yōon, and sokuon. Each kana displays hiragana, katakana, and romaji side by side.",
+      "url": "https://kana.feeshy.top/en/chart",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "All",
+      "author": {
+        "@type": "Person",
+        "name": "feeshy",
+        "url": "https://feeshy.top"
+      }
+    }
+  </script>
+
+  <link rel="stylesheet" href="../style.css">
+  </head>
+
+<body>
+
+  <div class="page-nav"><a href="./">Similarity</a> <span class="pn-sep">|</span> <strong>Gojūon</strong></div>
+  <div class="filter-bar" id="filterBar">
+    <button class="mode-btn" data-mode="seion">Seion</button>
+    <button class="mode-btn" data-mode="dakuon">Dakuon</button>
+    <button class="mode-btn" data-mode="sokuon">Sokuon</button>
+    <button class="mode-btn" data-mode="yoon">Yōon</button>
+    <span class="filter-sep"></span>
+    <button class="font-a-btn" data-font="connected" aria-label="Connected"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></button>
+    <button class="font-a-btn" data-font="disconnected" aria-label="Disconnected"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg></button>
+    <div class="font-tip" id="fontTip"><span class="sep">·</span>
+      <a href="../">Kana Similarity FDG</a>
+    </div>
+  </div>
+
+  <div class="chart-wrap" id="chartWrap">
+    <div class="footer">
+      <a href="https://github.com/feeshy/kana-similarity-fdg" target="_blank" rel="noopener">Code: feeshy</a>
+    </div>
+  </div>
+
+  <script src="../app.js"></script>
+  <script src="../chart.js"></script>
+</body>
+</html>

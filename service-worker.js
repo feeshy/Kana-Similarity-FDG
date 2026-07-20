@@ -1,26 +1,41 @@
-const CACHE_NAME = 'kana-fdg-v1.3';
+const CACHE_NAME = 'kana-fdg-v2.0';
 const STATIC_ASSETS = [
-  'app.js', 'config.js', 'style.css', 'assets/data.csv',
+  'app.js', 'fdg.js', 'chart.js', 'style.css', 'assets/data.csv',
   'assets/d3.v7.trimmed.js', 'assets/ZenKakuGothicNew-Regular-kana.woff2',
   'assets/KleeOne-600-kana.woff2', 'assets/favicon.svg', 'assets/maskable.svg'
 ];
 
-const HTML_PAGES = ['/', '/ja', '/zh'];
-
-// Installation: Precache assets & clean HTML responses (redirect defense)
+// Installation: Precache shared assets + current language HTML
 self.addEventListener('install', (e) => {
   e.waitUntil(
-    caches.open(CACHE_NAME).then(async (cache) => {
+    (async () => {
+      const cache = await caches.open(CACHE_NAME);
       await cache.addAll(STATIC_ASSETS);
-      await Promise.all(HTML_PAGES.map(async (page) => {
+
+      // Determine language from the page that registered this SW
+      let lang = 'en';
+      try {
+        const clients = await self.clients.matchAll({type: 'window', includeUncontrolled: true});
+        if (clients.length > 0) {
+          const path = new URL(clients[0].url).pathname;
+          const first = path.split('/').filter(Boolean)[0];
+          if (['en', 'ja', 'zh'].includes(first)) lang = first;
+        }
+      } catch (e) {}
+
+      // Precache current language pages (offline-first visit)
+      for (const page of [`/${lang}`, `/${lang}/chart`]) {
         try {
           const res = await fetch(`${page}?sw-bypass=1`);
-          if (!res.ok || res.redirected) throw new Error();
-          const cleanRes = new Response(await res.blob(), { headers: res.headers });
-          await cache.put(page, cleanRes);
-        } catch (err) { console.error(`Precache failed for ${page}`); }
-      }));
-    }).then(() => self.skipWaiting())
+          if (res.ok && !res.redirected) {
+            const cleanRes = new Response(await res.blob(), { headers: res.headers });
+            await cache.put(page, cleanRes);
+          }
+        } catch (err) { /* page may not exist yet, skip */ }
+      }
+
+      self.skipWaiting();
+    })()
   );
 });
 
@@ -46,15 +61,18 @@ self.addEventListener('fetch', (e) => {
   // A. Handle Navigation Requests (HTML pages)
   if (req.mode === 'navigate') {
     e.respondWith((async () => {
+      // Normalize trailing slash: /ja/ → /ja, /en/chart/ → /en/chart
+      const normPath = pathname.replace(/\/$/, '') || '/';
+
       // SW-level redirect on root path / based solely on browser language
-      if (pathname === '/' || pathname === '/index.html') {
+      if (normPath === '/' || normPath === '/index.html') {
         const lang = (navigator.language || '').toLowerCase().slice(0, 2);
         if (lang === 'ja' || lang === 'zh') {
           return Response.redirect(new URL(`/${lang}`, self.location.origin).href, 302);
         }
       }
 
-      const cached = await caches.match(pathname);
+      const cached = await caches.match(normPath);
 
       const fetchAndUpdate = async () => {
         try {
@@ -62,7 +80,7 @@ self.addEventListener('fetch', (e) => {
           if (netRes.redirected) return Response.redirect(netRes.url, 302);
           if (netRes.ok && netRes.type !== 'opaqueredirect') {
             const cache = await caches.open(CACHE_NAME);
-            await cache.put(pathname, netRes.clone());
+            await cache.put(normPath, netRes.clone());
           }
           return netRes;
         } catch (err) { return cached || Promise.reject(err); }
