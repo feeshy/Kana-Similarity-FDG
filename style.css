@@ -2,6 +2,7 @@
 @font-face{font-family:'Klee One';font-style:normal;font-weight:600;src:local('Klee One SemiBold'),url(assets/KleeOne-600-kana.woff2) format('woff2');unicode-range:U+0020,U+0061-007A,U+3041-3093,U+30A1-30F6,U+4E07,U+4E09,U+4E0D,U+4E0E,U+4E16,U+4E43,U+4E45,U+4E4B,U+4E4E,U+4E5F,U+4E8C,U+4EE5,U+4F0A,U+4FDD,U+516B,U+5229,U+52A0,U+5442,U+548C,U+591A,U+5929,U+592A,U+5948,U+5973,U+5974,U+5B87,U+5B89,U+5BF8,U+5C13,U+5DDD,U+5DE6,U+5DF1,U+5E7E,U+6563,U+65BC,U+65E0,U+66FE,U+672B,U+6B62,U+6B66,U+6BD4,U+6BDB,U+6C5F,U+6CE2,U+6D41,U+725F,U+7531,U+7559,U+77E5,U+793C,U+7962,U+7F8E,U+826F,U+8863,U+8A08,U+9060,U+90E8,U+963F,U+9808}
 
 *{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 body{
   font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
   background:#f5f5f7;color:#1d1d1f;
@@ -194,10 +195,8 @@ body.font-disconnected .romaji
 .cell.ghost{opacity:.28}
 .cell.ghost .hira,.cell.ghost .kata{font-size:17px}
 .cell.ghost .sub{font-size:9px}
-.cell.sokuon .hira,.cell.sokuon .kata{font-size:16px;letter-spacing:-.3px}
-.cell.sokuon .kana-pair{gap:1px}
-.cell.ycell .hira,.cell.ycell .kata{font-size:17px;letter-spacing:-.3px}
-.cell.ycell .kana-pair{gap:1px}
+.cell.sokuon .hira,.cell.sokuon .kata,.cell.ycell .hira,.cell.ycell .kata{font-size:16px}
+.cell.sokuon .kana-pair,.cell.ycell .kana-pair{gap:1px}
 .n-cell{grid-column:2/-1}
 .cell.dual{padding:3px 2px}
 .dual-main,.dual-sub{display:flex;flex-direction:column;align-items:center}
