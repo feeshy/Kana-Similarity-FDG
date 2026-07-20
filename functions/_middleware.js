@@ -17,6 +17,9 @@ export async function onRequest(context) {
     if (!isBot) {
       const acceptLang = request.headers.get('Accept-Language') || '';
       const lowLang = acceptLang.toLowerCase();
+      if (lowLang.startsWith('en')) {
+        return Response.redirect(new URL('/en/', request.url), 302);
+      }
       if (lowLang.startsWith('ja')) {
         return Response.redirect(new URL('/ja/', request.url), 302);
       }
