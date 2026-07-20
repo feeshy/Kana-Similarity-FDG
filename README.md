@@ -1,34 +1,34 @@
 # Kana Similarity FDG
 
-Interactive force-directed graph revealing which hiragana and katakana look alike, based on perceptual distance data from a research by Hiroki Higuchi & Tessei Kobayashi.
+Interactive tool for learning to distinguish similar hiragana and katakana, featuring a force-directed similarity graph and a complete gojūon chart.
 
-## Usage
+| Language | Similarity Graph | Gojūon Chart |
+|----------|-----------------|--------------|
+| English  | [kana.feeshy.top/en](https://kana.feeshy.top/en) | [kana.feeshy.top/en/chart](https://kana.feeshy.top/en/chart) |
+| Japanese | [kana.feeshy.top/ja](https://kana.feeshy.top/ja) | [kana.feeshy.top/ja/chart](https://kana.feeshy.top/ja/chart) |
+| Chinese  | [kana.feeshy.top/zh](https://kana.feeshy.top/zh) | [kana.feeshy.top/zh/chart](https://kana.feeshy.top/zh/chart) |
 
-visit the [live site](https://kana.feeshy.top).
+## Similarity Graph
 
-### Similarity Graph
+An interactive force-directed graph based on perceptual distance data from Higuchi & Kobayashi (2023). Characters that look alike are placed closer together.
 
-- **Drag** nodes to rearrange
-- **Scroll** or **pinch** to zoom, **click & drag** background to pan
-- **Click a character** to view its romaji reading and kanji origin
-- **Filter** between Hiragana / Katakana / Cross modes
-- **DIST** toggle shows perceptual distance labels on links
+- **Interact** — drag nodes, scroll/pinch to zoom, drag background to pan
+- **Explore** — click any kana to see its romaji reading and kanji origin
+- **Filter & tune** — switch between Hiragana/Cross/Katakana, toggle distance labels, adjust threshold slider
 
-### Gojūon Chart
+## Gojūon Chart
 
-An interactive [gojūon chart](https://kana.feeshy.top/en/chart) displaying all hiragana and katakana in the traditional 10×5 grid, in three languages:
+A complete gojūon table displaying all kana in the classic 10×5 grid, with four display modes:
 
-| Language | FDG Graph | Chart |
-|----------|-----------|-------|
-| English  | [/en](https://kana.feeshy.top/en) | [/en/chart](https://kana.feeshy.top/en/chart) |
-| Japanese | [/ja](https://kana.feeshy.top/ja) | [/ja/chart](https://kana.feeshy.top/ja/chart) |
-| Chinese  | [/zh](https://kana.feeshy.top/zh) | [/zh/chart](https://kana.feeshy.top/zh/chart) |
+- **Seion** — plain kana (default)
+- **Dakuon** — voiced forms, toggle between ば and ぱ by clicking the row header
+- **Sokuon** — geminate forms
+- **Yōon** — palatalized forms mapped to や/ゆ/よ columns
 
-Features on the chart page:
-- **Tab switching** between Seion (plain), Dakuon (voiced), Sokuon (geminate) and Yōon (palatalized) forms
-- **Font toggle** between print style (Zen Kaku Gothic New) and handwriting style (Klee One)
-- **Interactive row header**: click ば/ぱ on the は-row to toggle between voiced and half-voiced forms
-- **Page navigation** between chart and similarity graph via the top bar
+## Additional features
+
+- **Font Toggle** — switch between print style (connected strokes, Zen Kaku Gothic New) and handwriting style (disconnected strokes, Klee One)
+- **PWA offline support**
 
 ## License
 
@@ -37,5 +37,12 @@ Features on the chart page:
 
 ## External Links
 
-- [Higuchi, H., Kobayashi, T. Letter visual similarity of Japanese hiragana and katakana based on reaction times. Curr Psychol 42, 12835–12844 (2023)](https://doi.org/10.1007/s12144-021-02664-w)
-- [How can I distinguish similar kana? - sljfaq.org](https://www.sljfaq.org/afaq/similar-kana.html)
+- [Higuchi & Kobayashi (2023) — Letter visual similarity of Japanese hiragana and katakana](https://doi.org/10.1007/s12144-021-02664-w)
+- [How can I distinguish similar kana? — sljfaq.org](https://www.sljfaq.org/afaq/similar-kana.html)
+- Webfonts
+  - [Zen Kaku Gothic New](https://github.com/googlefonts/zen-kakugothic) — print style font
+  - [Klee One](https://github.com/fontworks-fonts/Klee) — handwriting style font
+- Tech Stack
+  - [D3.js v7](https://d3js.org/) — force-directed graph layout
+  - [Service Worker](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API) — SWR strategy for offline caching
+  - [Cloudflare Pages](https://pages.cloudflare.com/) — hosting & middleware redirect
