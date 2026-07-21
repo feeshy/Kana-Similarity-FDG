@@ -4,11 +4,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gojūon Chart — Hiragana, Katakana, Romaji</title>
-  <meta name="description" content="Complete Japanese gojūon chart covering seion, dakuon, handakuon, yōon, and sokuon. Each kana displays hiragana, katakana, and romaji side by side.">
+  <title>Interactive Gojūon Chart — Seion, Dakuon, Sokuon &amp; Yōon Modes</title>
+  <meta name="description" content="Interactive Japanese gojūon chart with four display modes: seion, dakuon, sokuon, and yōon. Features dakuon/handakuon row toggles and yōon variant switching, plus click-to-pronounce TTS and handwriting font toggle.">
 
-  <meta property="og:title" content="Gojūon Chart — Hiragana, Katakana, Romaji">
-  <meta property="og:description" content="Complete Japanese gojūon chart covering seion, dakuon, handakuon, yōon, and sokuon. Each kana displays hiragana, katakana, and romaji side by side.">
+  <meta property="og:title" content="Interactive Gojūon Chart — Seion, Dakuon, Sokuon &amp; Yōon Modes">
+  <meta property="og:description" content="Interactive Japanese gojūon chart with four display modes: seion, dakuon, sokuon, and yōon. Features dakuon/handakuon row toggles and yōon variant switching, plus click-to-pronounce TTS and handwriting font toggle.">
   <meta property="og:type" content="website">
   <meta property="og:image" content="https://kana.feeshy.top/assets/maskable.svg">
   <meta property="og:url" content="https://kana.feeshy.top/en/chart">
@@ -28,8 +28,8 @@
     {
       "@context": "https://schema.org",
       "@type": "WebApplication",
-      "name": "Gojūon Chart",
-      "description": "Complete Japanese gojūon chart covering seion, dakuon, handakuon, yōon, and sokuon. Each kana displays hiragana, katakana, and romaji side by side.",
+      "name": "Interactive Gojūon Chart — Seion, Dakuon, Sokuon & Yōon Modes",
+      "description": "Interactive Japanese gojūon chart with four display modes: seion, dakuon, sokuon, and yōon. Features dakuon/handakuon row toggles and yōon variant switching, plus click-to-pronounce TTS and handwriting font toggle.",
       "url": "https://kana.feeshy.top/en/chart",
       "applicationCategory": "EducationalApplication",
       "operatingSystem": "All",
@@ -55,6 +55,8 @@
     <span class="filter-sep"></span>
     <button class="font-a-btn" data-font="connected" aria-label="Connected"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></button>
     <button class="font-a-btn" data-font="disconnected" aria-label="Disconnected"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg></button>
+    <span class="filter-sep"></span>
+    <button class="tts-btn" id="ttsBtn" aria-label="Pronunciation"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg></button>
     <div class="font-tip" id="fontTip"></div>
   </div>
 

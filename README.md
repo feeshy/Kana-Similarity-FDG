@@ -1,4 +1,4 @@
-# Kana Similarity FDG
+# Kana Similarity FDG & Gojūon Chart
 
 Interactive tool for learning to distinguish similar hiragana and katakana, featuring a force-directed similarity graph and a complete gojūon chart.
 
@@ -13,8 +13,9 @@ Interactive tool for learning to distinguish similar hiragana and katakana, feat
 An interactive force-directed graph based on perceptual distance data from Higuchi & Kobayashi (2023). Characters that look alike are placed closer together.
 
 - **Interact** — drag nodes, scroll/pinch to zoom, drag background to pan
-- **Explore** — click any kana to see its romaji reading and kanji origin
-- **Filter & tune** — switch between Hiragana/Cross/Katakana, toggle distance labels, adjust threshold slider
+- **Explore** — click any kana to see its romaji reading, kanji origin, and connected links with distance-based glow; click again or tap the background to zoom out
+- **Filter & tune** — switch between Hiragana/Cross/Katakana modes, toggle distance labels, adjust the threshold slider to control link density
+- **Highlight links** — clicking a node highlights its connected edges with opacity proportional to perceptual similarity
 
 ## Gojūon Chart
 
@@ -23,12 +24,13 @@ A complete gojūon table displaying all kana in the classic 10×5 grid, with fou
 - **Seion** — plain kana (default)
 - **Dakuon** — voiced forms, toggle between ば and ぱ by clicking the row header
 - **Sokuon** — geminate forms
-- **Yōon** — palatalized forms mapped to や/ゆ/よ columns
+- **Yōon** — palatalized forms mapped to や/ゆ/よ columns, with voiced/handakuon variants toggleable via row headers
 
 ## Additional features
 
 - **Font Toggle** — switch between print style (connected strokes, Zen Kaku Gothic New) and handwriting style (disconnected strokes, Klee One)
-- **PWA offline support**
+- **TTS Pronunciation** — hear kana read aloud via browser speech synthesis; supports Japanese voice when available
+- **PWA offline support** — service worker caches assets and pages with a stale-while-revalidate strategy, includes automatic language-based navigation redirects
 
 ## License
 

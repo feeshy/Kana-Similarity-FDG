@@ -1,4 +1,4 @@
-const CACHE_NAME = 'kana-fdg-v2.0';
+const CACHE_NAME = 'kana-fdg-v2.1';
 const STATIC_ASSETS = [
   'app.js', 'fdg.js', 'chart.js', 'style.css', 'assets/data.csv',
   'assets/d3.v7.trimmed.js', 'assets/ZenKakuGothicNew-Regular-kana.woff2',
@@ -53,6 +53,23 @@ self.addEventListener('activate', (e) => {
   );
 });
 
+async function swrFetch(req, cacheKey, cached, allowRedirect) {
+  try {
+    const netRes = await fetch(req);
+    if (allowRedirect && netRes.redirected) return Response.redirect(netRes.url, 302);
+    if (netRes.ok && !netRes.redirected && netRes.type !== 'opaqueredirect') {
+      const cache = await caches.open(CACHE_NAME);
+      await cache.put(cacheKey, netRes.clone());
+    }
+    return netRes;
+  } catch (err) { return cached || Promise.reject(err); }
+}
+
+function respondWithSWR(e, req, cacheKey, cached, allowRedirect) {
+  if (cached) { e.waitUntil(swrFetch(req, cacheKey, cached, allowRedirect)); return cached; }
+  return swrFetch(req, cacheKey, cached, allowRedirect);
+}
+
 // Fetch Interceptor: SWR + Navigation Redirects
 self.addEventListener('fetch', (e) => {
   const req = e.request;
@@ -80,24 +97,7 @@ self.addEventListener('fetch', (e) => {
       }
 
       const cached = await caches.match(normPath);
-
-      const fetchAndUpdate = async () => {
-        try {
-          const netRes = await fetch(req);
-          if (netRes.redirected) return Response.redirect(netRes.url, 302);
-          if (netRes.ok && netRes.type !== 'opaqueredirect') {
-            const cache = await caches.open(CACHE_NAME);
-            await cache.put(normPath, netRes.clone());
-          }
-          return netRes;
-        } catch (err) { return cached || Promise.reject(err); }
-      };
-
-      if (cached) {
-        e.waitUntil(fetchAndUpdate());
-        return cached;
-      }
-      return fetchAndUpdate();
+      return respondWithSWR(e, req, normPath, cached, true);
     })());
     return;
   }
@@ -105,21 +105,6 @@ self.addEventListener('fetch', (e) => {
   // B. Handle Static Assets (SWR)
   e.respondWith((async () => {
     const cached = await caches.match(req);
-    const fetchAndUpdate = async () => {
-      try {
-        const netRes = await fetch(req);
-        if (netRes.ok && !netRes.redirected && netRes.type !== 'opaqueredirect') {
-          const cache = await caches.open(CACHE_NAME);
-          await cache.put(req, netRes.clone());
-        }
-        return netRes;
-      } catch (err) { return cached || Promise.reject(err); }
-    };
-
-    if (cached) {
-      e.waitUntil(fetchAndUpdate());
-      return cached;
-    }
-    return fetchAndUpdate();
+    return respondWithSWR(e, req, req, cached, false);
   })());
 });

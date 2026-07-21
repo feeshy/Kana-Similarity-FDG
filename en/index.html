@@ -7,7 +7,6 @@
   <title>Kana Similarity FDG — Distinguish Hiragana & Katakana</title>
   <meta name="description" content="Learn to distinguish similar hiragana and katakana on a force-directed graph by exploring their romaji readings and kanji origins. Discover perceptual distance and visual differences between confusing kana pairs (e.g. ぬ-め, ほ-は, フ-ワ, シ-ツ).">
   <meta name="keywords" content="hiragana, katakana, similar, confusing, distinguish, difference, learn, japanese, kana, kanji, perceptual similarity, visual similarity, visual difference, force-directed graph, romaji reading, kanji origin, perceptual distance, d3-js">
-  <meta name="baidu-site-verification" content="codeva-JeKZHypDxq" />
 
   <meta property="og:title" content="Kana Similarity FDG">
   <meta property="og:description" content="Learn to distinguish similar hiragana and katakana on a force-directed graph by exploring their romaji readings and kanji origins. Discover perceptual distance and visual differences between confusing kana pairs (e.g. ぬ-め, ほ-は, フ-ワ, シ-ツ).">
@@ -52,16 +51,18 @@
   <div class="page-nav"><strong>Similarity</strong> <span class="pn-sep">|</span> <a href="./chart">Gojūon</a></div>
   <div class="filter-bar" id="filterBar">
     <button class="filter-btn" data-filter="hiragana" data-label="Hiragana">あ</button>
-    <button class="filter-btn" data-filter="cross" data-label="All"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="7" height="14" rx="1"/><rect x="14" y="5" width="7" height="14" rx="1"/></svg></button>
+    <button class="filter-btn" data-filter="cross" data-label="All" title="All"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="7" height="14" rx="1"/><rect x="14" y="5" width="7" height="14" rx="1"/></svg></button>
     <button class="filter-btn" data-filter="katakana" data-label="Katakana">ア</button>
     <span class="filter-sep"></span>
     <button class="font-a-btn" data-font="connected" aria-label="Connected"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></button>
     <button class="font-a-btn" data-font="disconnected" aria-label="Disconnected"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg></button>
+    <span class="filter-sep"></span>
+    <button class="tts-btn" id="ttsBtn" aria-label="Pronunciation"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg></button>
     <div class="font-tip" id="fontTip"></div>
   </div>
   <div class="dist-slider-bar">
     <span class="dist-slider-val" id="distSliderVal">65</span>
-    <input type="range" id="distSlider" class="dist-slider" min="50" max="80" value="65">
+    <input type="range" id="distSlider" class="dist-slider" min="50" max="80" value="65" aria-label="Distance threshold">
     <div class="dist-slider-foot">
       <button class="eye-btn" id="distToggle" aria-label="Toggle distance labels"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
     </div>
@@ -87,7 +88,6 @@
   <script src="/assets/d3.v7.trimmed.js"></script>
   <script src="/fdg.js"></script>
   <script src="/app.js"></script>
-  </script>
 
 </body>
 

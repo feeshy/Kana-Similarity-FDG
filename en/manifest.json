@@ -1,6 +1,6 @@
 {
-  "name": "Kana Similarity FDG",
-  "short_name": "Kana Similarity",
+  "name": "Kana Similarity FDG & Gojūon Chart",
+  "short_name": "Kana Similarity & Gojūon",
   "start_url": "/en/",
   "display": "standalone",
   "background_color": "#f5f5f7",

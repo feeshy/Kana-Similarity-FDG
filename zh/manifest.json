@@ -1,6 +1,6 @@
 {
-  "name": "假名相似度力导向图",
-  "short_name": "假名相似度",
+  "name": "假名相似度力导向图 & 五十音图",
+  "short_name": "假名相似度 & 五十音",
   "start_url": "/zh/",
   "display": "standalone",
   "background_color": "#f5f5f7",

@@ -4,11 +4,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>五十音図 — ひらがな・カタカナ・ローマ字</title>
-  <meta name="description" content="清音・濁音・半濁音・拗音・促音を網羅した五十音図。すべての仮名のひらがな・カタカナ・ローマ字を同時表示。手書き体フォントと漢字由来表示に対応。">
+  <title>五十音図 — 清音・濁音・促音・拗音の四モード切替</title>
+  <meta name="description" content="インタラクティブな五十音図。清音、濁音・半濁音、促音、拗音の四つの表示モードを切替可能。濁点半濁行の切替、拗音バリエーション切替が特徴。仮名クリック発音（TTS）、手書きフォント切替にも対応。">
 
-  <meta property="og:title" content="五十音図 — ひらがな・カタカナ・ローマ字">
-  <meta property="og:description" content="清音・濁音・半濁音・拗音・促音を網羅した五十音図。すべての仮名のひらがな・カタカナ・ローマ字を同時表示。手書き体フォントと漢字由来表示に対応。">
+  <meta property="og:title" content="五十音図 — 清音・濁音・促音・拗音の四モード切替">
+  <meta property="og:description" content="インタラクティブな五十音図。清音、濁音・半濁音、促音、拗音の四つの表示モードを切替可能。濁点半濁行の切替、拗音バリエーション切替が特徴。仮名クリック発音（TTS）、手書きフォント切替にも対応。">
   <meta property="og:type" content="website">
   <meta property="og:image" content="https://kana.feeshy.top/assets/maskable.svg">
   <meta property="og:url" content="https://kana.feeshy.top/ja/chart">
@@ -28,8 +28,8 @@
     {
       "@context": "https://schema.org",
       "@type": "WebApplication",
-      "name": "五十音図",
-      "description": "清音・濁音・半濁音・拗音・促音を網羅した五十音図。すべての仮名のひらがな・カタカナ・ローマ字を同時表示。手書き体フォントと漢字由来表示に対応。",
+      "name": "五十音図 — 清音・濁音・促音・拗音の四モード切替",
+      "description": "インタラクティブな五十音図。清音、濁音・半濁音、促音、拗音の四つの表示モードを切替可能。濁点半濁行の切替、拗音バリエーション切替が特徴。仮名クリック発音（TTS）、手書きフォント切替にも対応。",
       "url": "https://kana.feeshy.top/ja/chart",
       "applicationCategory": "EducationalApplication",
       "operatingSystem": "All",
@@ -55,12 +55,14 @@
     <span class="filter-sep"></span>
     <button class="font-a-btn" data-font="connected" aria-label="Connected"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></button>
     <button class="font-a-btn" data-font="disconnected" aria-label="Disconnected"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg></button>
+    <span class="filter-sep"></span>
+    <button class="tts-btn" id="ttsBtn" aria-label="発音"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg></button>
     <div class="font-tip" id="fontTip"></div>
   </div>
 
   <div class="chart-wrap" id="chartWrap">
     <div class="footer">
-      <a href="https://github.com/feeshy/kana-similarity-fdg" target="_blank" rel="noopener">コード: feeshy</a>
+      <a href="https://github.com/feeshy/kana-similarity-fdg" target="_blank" rel="noopener">Code: feeshy</a>
     </div>
   </div>
 

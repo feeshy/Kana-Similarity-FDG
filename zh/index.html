@@ -51,16 +51,18 @@
   <div class="page-nav"><strong>相似度</strong> <span class="pn-sep">|</span> <a href="./chart">五十音</a></div>
   <div class="filter-bar" id="filterBar">
     <button class="filter-btn" data-filter="hiragana" data-label="平假名">あ</button>
-    <button class="filter-btn" data-filter="cross" data-label="交叉对比"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="7" height="14" rx="1"/><rect x="14" y="5" width="7" height="14" rx="1"/></svg></button>
+    <button class="filter-btn" data-filter="cross" data-label="交叉对比" title="交叉对比"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="7" height="14" rx="1"/><rect x="14" y="5" width="7" height="14" rx="1"/></svg></button>
     <button class="filter-btn" data-filter="katakana" data-label="片假名">ア</button>
     <span class="filter-sep"></span>
     <button class="font-a-btn" data-font="connected" aria-label="连笔"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></button>
     <button class="font-a-btn" data-font="disconnected" aria-label="断笔"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg></button>
+    <span class="filter-sep"></span>
+    <button class="tts-btn" id="ttsBtn" aria-label="发音"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg></button>
     <div class="font-tip" id="fontTip"></div>
   </div>
   <div class="dist-slider-bar">
     <span class="dist-slider-val" id="distSliderVal">65</span>
-    <input type="range" id="distSlider" class="dist-slider" min="50" max="80" value="65">
+    <input type="range" id="distSlider" class="dist-slider" min="50" max="80" value="65" aria-label="距离阈值">
     <div class="dist-slider-foot">
       <button class="eye-btn" id="distToggle" aria-label="切换距离标签"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
     </div>
@@ -86,7 +88,6 @@
   <script src="/assets/d3.v7.trimmed.js"></script>
   <script src="/fdg.js"></script>
   <script src="/app.js"></script>
-  </script>
 
 </body>
 

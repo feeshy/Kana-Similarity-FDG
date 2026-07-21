@@ -20,6 +20,7 @@ if (document.getElementById('chartWrap')) {
     var BA = [['ば', 'バ', 'ba', '波', '八'], ['び', 'ビ', 'bi', '比', '比'], ['ぶ', 'ブ', 'bu', '不', '不'], ['べ', 'ベ', 'be', '部', '部'], ['ぼ', 'ボ', 'bo', '保', '保']];
     var PA = [['ぱ', 'パ', 'pa', '波', '八'], ['ぴ', 'ピ', 'pi', '比', '比'], ['ぷ', 'プ', 'pu', '不', '不'], ['ぺ', 'ペ', 'pe', '部', '部'], ['ぽ', 'ポ', 'po', '保', '保']];
     var isPA = false;
+    var yoonVar = {};
 
     var D = {
       1: [['が', 'ガ', 'ga', '加', '加'], ['ぎ', 'ギ', 'gi', '幾', '幾'], ['ぐ', 'グ', 'gu', '久', '久'], ['げ', 'ゲ', 'ge', '計', '計'], ['ご', 'ゴ', 'go', '己', '己']],
@@ -33,8 +34,18 @@ if (document.getElementById('chartWrap')) {
       3: { b: ['ち', 'チ', 'chi', '知', '知'], y: ['ちゃ', 'チャ', 'cha'], u: ['ちゅ', 'チュ', 'chu'], o: ['ちょ', 'チョ', 'cho'] },
       4: { b: ['に', 'ニ', 'ni', '仁', '二'], y: ['にゃ', 'ニャ', 'nya'], u: ['にゅ', 'ニュ', 'nyu'], o: ['にょ', 'ニョ', 'nyo'] },
       5: { b: ['ひ', 'ヒ', 'hi', '比', '比'], y: ['ひゃ', 'ヒャ', 'hya'], u: ['ひゅ', 'ヒュ', 'hyu'], o: ['ひょ', 'ヒョ', 'hyo'] },
-      6: { b: ['み', 'ミ', 'mi', '美', '三'], y: ['みゃ', 'ミャ', 'mya'], u: ['みゅ', 'ミュ', 'myu'], o: ['みょ', 'ミョ', 'myo'] },
-      8: { b: ['り', 'リ', 'ri', '利', '利'], y: ['りゃ', 'リャ', 'rya'], u: ['りゅ', 'リュ', 'ryu'], o: ['りょ', 'リョ', 'ryo'] }
+       6: { b: ['み', 'ミ', 'mi', '美', '三'], y: ['みゃ', 'ミャ', 'mya'], u: ['みゅ', 'ミュ', 'myu'], o: ['みょ', 'ミョ', 'myo'] },
+       7: { b: ['い', 'イ', 'i'], y: ['や', 'ヤ', 'ya'], u: ['ゆ', 'ユ', 'yu'], o: ['よ', 'ヨ', 'yo'] },
+       8: { b: ['り', 'リ', 'ri', '利', '利'], y: ['りゃ', 'リャ', 'rya'], u: ['りゅ', 'リュ', 'ryu'], o: ['りょ', 'リョ', 'ryo'] }
+    };
+
+    var YD = {
+      1: { b: ['ぎ', 'ギ', 'gi', '幾', '幾'], y: ['ぎゃ', 'ギャ', 'gya'], u: ['ぎゅ', 'ギュ', 'gyu'], o: ['ぎょ', 'ギョ', 'gyo'] },
+       2: { b: ['じ', 'ジ', 'ji', '之', '之'], y: ['じゃ', 'ジャ', 'ja'], u: ['じゅ', 'ジュ', 'ju'], o: ['じょ', 'ジョ', 'jo'] },
+      5: { b: ['び', 'ビ', 'bi', '比', '比'], y: ['びゃ', 'ビャ', 'bya'], u: ['びゅ', 'ビュ', 'byu'], o: ['びょ', 'ビョ', 'byo'] }
+    };
+    var YP = {
+      5: { b: ['ぴ', 'ピ', 'pi', '比', '比'], y: ['ぴゃ', 'ピャ', 'pya'], u: ['ぴゅ', 'ピュ', 'pyu'], o: ['ぴょ', 'ピョ', 'pyo'] }
     };
 
     var K = {
@@ -46,7 +57,7 @@ if (document.getElementById('chartWrap')) {
 
     var mode = 'seion';
     var ce = [], rh = [], ch = [];
-    var gridEl;
+    var gridEl, nRowEl;
 
     function el(t, c, h) { var e = document.createElement(t); if (c) e.className = c; if (h !== undefined) e.innerHTML = h; return e }
 
@@ -60,8 +71,6 @@ if (document.getElementById('chartWrap')) {
         ce[ri] = [];
         for (var ci = 0; ci < 5; ci++) { ce[ri][ci] = el('div', 'cell'); g.appendChild(ce[ri][ci]) }
       }
-      rh[10] = el('div', 'row-header'); g.appendChild(rh[10]);
-      ce[10] = []; ce[10][0] = el('div', 'cell n-cell'); g.appendChild(ce[10][0]);
       return g;
     }
 
@@ -75,7 +84,6 @@ if (document.getElementById('chartWrap')) {
     function updateCell(ri, ci) {
       if (!ce[ri] || !ce[ri][ci]) return;
       var c = ce[ri][ci]; c.innerHTML = ''; c.className = 'cell';
-      if (ri === 10) { if (ci === 0) { c.classList.add('n-cell'); fillN(c, ['ん', 'ン', 'n']) } return }
       if (se(ri, ci)) { c.classList.add('empty'); return }
 
       if (mode === 'seion') {
@@ -88,8 +96,14 @@ if (document.getElementById('chartWrap')) {
         if (Array.isArray(d)) fillN(c, d); else c.classList.add('vacant');
       } else if (mode === 'yoon') {
         if (!Y[ri]) { c.classList.add('vacant'); return }
-        var yd = Y[ri];
-        if (ci === 0) { c.classList.add('ycell'); fillN(c, yd.y) } else if (ci === 1) { c.classList.add('ghost'); fillN(c, yd.b) } else if (ci === 2) { c.classList.add('ycell'); fillN(c, yd.u) } else if (ci === 3) { c.classList.add('vacant') } else { c.classList.add('ycell'); fillN(c, yd.o) }
+        var v = yoonVar[ri] || 0;
+        var yd;
+        if (v === 1 && YD[ri]) { yd = YD[ri] } else if (v === 2 && YP[ri]) { yd = YP[ri] } else { yd = Y[ri] }
+        if (ci === 3) { c.classList.add('vacant') }
+        else {
+          if (ri === 7 || ci === 1) { c.classList.add('ghost') } else { c.classList.add('ycell') }
+          if (ci === 0) { fillN(c, yd.y) } else if (ci === 1) { fillN(c, yd.b) } else if (ci === 2) { fillN(c, yd.u) } else { fillN(c, yd.o) }
+        }
       } else if (mode === 'sokuon') {
         if (!K[ri]) { c.classList.add('vacant'); return }
         var d = K[ri][ci];
@@ -110,23 +124,52 @@ if (document.getElementById('chartWrap')) {
           else if (ri === 5) { rh[ri].innerHTML = '<span class="ba' + (isPA ? '' : ' active') + '">ば</span><span class="bp-sep">/</span><span class="pa' + (isPA ? ' active' : '') + '">ぱ</span>'; rh[ri].classList.add('toggle-rh'); rh[ri].classList.toggle('is-pa',isPA) }
           else { rh[ri].innerHTML = RL[ri]; rh[ri].classList.add('dimmed') }
         } else if (mode === 'yoon') {
-          rh[ri].innerHTML = RL[ri]; if (!Y[ri]) rh[ri].classList.add('dimmed');
+          if (ri === 1 || ri === 2 || ri === 5) {
+            var v = yoonVar[ri] || 0;
+            var yLabels = { 1: ['か', 'が'], 2: ['さ', 'ざ'], 5: ['は', 'ば', 'ぱ'] };
+            var arr = yLabels[ri];
+            var html = '';
+            for (var i = 0; i < arr.length; i++) {
+              if (i > 0) html += '<span class="y-sep">/</span>';
+              html += '<span class="y-var' + (v === i ? ' active' : '') + '" data-yoon="' + ri + '" data-var="' + i + '">' + arr[i] + '</span>';
+            }
+            rh[ri].innerHTML = html;
+            rh[ri].classList.add('toggle-rh'); rh[ri].setAttribute('data-yoon', ri);
+          } else {
+            rh[ri].innerHTML = RL[ri]; if (!Y[ri]) rh[ri].classList.add('dimmed');
+          }
         } else if (mode === 'sokuon') {
-          rh[ri].innerHTML = RL[ri]; if (!K[ri]) rh[ri].classList.add('dimmed');
+          rh[ri].innerHTML = (ri === 5 ? 'ぱ' : RL[ri]); if (!K[ri]) rh[ri].classList.add('dimmed');
         } else {
           rh[ri].innerHTML = RL[ri];
         }
       }
-      rh[10].innerHTML = 'ん'; rh[10].className = 'row-header';
+    }
+
+    function updateN() {
+      if (!nRowEl) return;
+      var c = nRowEl.querySelector('.cell');
+      c.innerHTML = ''; c.className = 'cell n-cell';
+      fillN(c, ['ん', 'ン', 'n']);
     }
 
     function updateAll() {
       updateHeaders();
-      for (var ri = 0; ri < 11; ri++)for (var ci = 0; ci < 5; ci++)updateCell(ri, ci);
+      for (var ri = 0; ri < 10; ri++)for (var ci = 0; ci < 5; ci++)updateCell(ri, ci);
+      updateN();
     }
 
     var w = document.getElementById('chartWrap');
     w.insertBefore(buildGrid(), w.querySelector('.chart-footer'));
+    nRowEl = el('div', 'n-row');
+    nRowEl.innerHTML = '<div class="row-header">ん</div><div class="cell n-cell"></div>';
+    nRowEl.addEventListener('click', function (e) {
+      if (typeof speakKana === 'function') {
+        var cell = e.target.closest('.cell') || nRowEl.querySelector('.cell');
+        speakKana('ん', cell);
+      }
+    });
+    w.insertBefore(nRowEl, w.querySelector('.chart-footer'));
     updateAll();
 
     document.querySelector('.mode-btn[data-mode="seion"]').classList.add('active');
@@ -145,8 +188,28 @@ if (document.getElementById('chartWrap')) {
     gridEl.addEventListener('click', function (e) {
       var t = e.target;
       while (t && t !== gridEl) {
-        if (t.classList && t.classList.contains('toggle-rh')) { isPA = !isPA; updateAll(); return }
+        if (t.classList && t.classList.contains('toggle-rh')) {
+          if (mode === 'yoon') {
+            var row = parseInt(t.dataset.yoon);
+            if (row === 1 || row === 2) {
+              yoonVar[row] = (yoonVar[row] || 0) === 0 ? 1 : 0;
+              updateAll();
+            } else if (row === 5) {
+              yoonVar[row] = ((yoonVar[row] || 0) + 1) % 3;
+              updateAll();
+            }
+            return;
+          }
+          isPA = !isPA;
+          updateAll();
+          return;
+        }
         t = t.parentElement;
+      }
+      var cell = e.target.closest('.cell');
+      if (cell && typeof speakKana === 'function') {
+        var h = cell.querySelector('.hira');
+        if (h) speakKana(h.textContent, cell);
       }
     });
   })();

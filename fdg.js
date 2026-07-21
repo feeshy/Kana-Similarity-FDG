@@ -158,7 +158,6 @@ async function main() {
   const aLinks = mkLS(FORCE.cross, allRaw, 'cross');
 
   const visualLinks = [...hLinks, ...kLinks, ...aLinks];
-  const links = visualLinks;
 
   const aNodeIds = new Set();
   aLinks.forEach(l => { aNodeIds.add(l.source); aNodeIds.add(l.target); });
@@ -194,13 +193,14 @@ async function main() {
   svg.call(zoom);
 
   // ─── Deep-cloned data per simulation ─────────────────────
-  const hData = hNodes.map(d => ({ ...d, x: undefined, y: undefined, vx: undefined, vy: undefined, fx: undefined, fy: undefined }));
-  const kData = kNodes.map(d => ({ ...d, x: undefined, y: undefined, vx: undefined, vy: undefined, fx: undefined, fy: undefined }));
-  const aData = aNodes.map(d => ({ ...d, x: undefined, y: undefined, vx: undefined, vy: undefined, fx: undefined, fy: undefined }));
-
-  const hMap = Object.fromEntries(hData.map(d => [d.id, d]));
-  const kMap = Object.fromEntries(kData.map(d => [d.id, d]));
-  const aMap = Object.fromEntries(aData.map(d => [d.id, d]));
+  function makeSimData(nodes) {
+    const data = nodes.map(d => ({ ...d, x: undefined, y: undefined, vx: undefined, vy: undefined, fx: undefined, fy: undefined }));
+    const map = Object.fromEntries(data.map(d => [d.id, d]));
+    return { data, map };
+  }
+  const { data: hData, map: hMap } = makeSimData(hNodes);
+  const { data: kData, map: kMap } = makeSimData(kNodes);
+  const { data: aData, map: aMap } = makeSimData(aNodes);
 
   // ─── Simulation ──────────────────────────────────────────
   function cfg(mode) {
@@ -229,32 +229,20 @@ async function main() {
 
   const cH = cfg('hira'); const cK = cfg('kata'); const cX = cfg('cross');
 
-  const simH = d3.forceSimulation(hData)
-    .force('link', mkLink(hLinks, cH))
-    .force('charge', mkForces(cH)[0])
-    .force('x', mkForces(cH)[1])
-    .force('y', mkForces(cH)[2])
-    .force('center', mkForces(cH)[3])
-    .force('collide', mkForces(cH)[4])
-    .alphaDecay(cH.alphaDecay).alphaTarget(cH.alphaIdle).nodes(hData).stop();
+  function assignForces(sim, links, cfg, data) {
+    var f = mkForces(cfg);
+    sim.force('link', mkLink(links, cfg))
+      .force('charge', f[0]).force('x', f[1]).force('y', f[2])
+      .force('center', f[3]).force('collide', f[4])
+      .alphaDecay(cfg.alphaDecay).alphaTarget(cfg.alphaIdle).nodes(data).stop();
+  }
 
-  const simK = d3.forceSimulation(kData)
-    .force('link', mkLink(kLinks, cK))
-    .force('charge', mkForces(cK)[0])
-    .force('x', mkForces(cK)[1])
-    .force('y', mkForces(cK)[2])
-    .force('center', mkForces(cK)[3])
-    .force('collide', mkForces(cK)[4])
-    .alphaDecay(cK.alphaDecay).alphaTarget(cK.alphaIdle).nodes(kData).stop();
-
-  const simA = d3.forceSimulation(aData)
-    .force('link', mkLink(aLinks, cX))
-    .force('charge', mkForces(cX)[0])
-    .force('x', mkForces(cX)[1])
-    .force('y', mkForces(cX)[2])
-    .force('center', mkForces(cX)[3])
-    .force('collide', mkForces(cX)[4])
-    .alphaDecay(cX.alphaDecay).alphaTarget(cX.alphaIdle).nodes(aData);
+  const simH = d3.forceSimulation(hData);
+  assignForces(simH, hLinks, cH, hData);
+  const simK = d3.forceSimulation(kData);
+  assignForces(simK, kLinks, cK, kData);
+  const simA = d3.forceSimulation(aData);
+  assignForces(simA, aLinks, cX, aData);
 
   let activeFilter = localStorage.getItem('kana-filter') || 'cross';
 
@@ -285,14 +273,14 @@ async function main() {
 
   // ─── Draw links ──────────────────────────────────────────
   let linkEls = linkG.selectAll('line')
-    .data(links).join('line')
+    .data(visualLinks).join('line')
     .attr('class', 'link')
     .attr('stroke', FORCE.display.linkVisual)
     .attr('opacity', FORCE.display.linkOpacity);
 
   // link distance labels (hidden by default)
   let linkLabel = linkG.selectAll('.link-label')
-    .data(links).join('text')
+    .data(visualLinks).join('text')
     .attr('class', 'link-label')
     .attr('font-size', 12)
     .attr('text-anchor', 'middle')
@@ -383,6 +371,7 @@ async function main() {
     e.stopPropagation();
     if (selectedNode?.id === d.id) { hideCard(); return; }
     showCard(d);
+    speakKana(d.kana, d3.select(e.currentTarget).node());
     var nd = getAM()[d.id];
     if (nd) svg.transition().duration(600)
       .call(zoom.transform, d3.zoomIdentity.translate(width / 2 - nd.x, height / 2 - nd.y));
@@ -414,26 +403,27 @@ async function main() {
       else show = kNodeIds.has(d.id);
       d3.select(this).style('display', show ? null : 'none');
     });
-    linkEls.each(function (l) {
+    function linkVisible(l) {
       const sid = l.source.id || l.source;
       const tid = l.target.id || l.target;
       const sn = nodeMap[sid];
       const tn = nodeMap[tid];
-      let show;
-      if (filter === 'cross') show = sn && tn && aNodeIds.has(sid) && aNodeIds.has(tid);
-      else show = sn && tn && sn.type === filter && tn.type === filter;
-      d3.select(this).style('display', show ? null : 'none');
+      if (filter === 'cross') return sn && tn && aNodeIds.has(sid) && aNodeIds.has(tid);
+      return sn && tn && sn.type === filter && tn.type === filter;
+    }
+    linkEls.each(function (l) {
+      d3.select(this).style('display', linkVisible(l) ? null : 'none');
     });
     linkLabel.each(function (l) {
-      const sid = l.source.id || l.source;
-      const tid = l.target.id || l.target;
-      const sn = nodeMap[sid];
-      const tn = nodeMap[tid];
-      let show;
-      if (filter === 'cross') show = sn && tn && aNodeIds.has(sid) && aNodeIds.has(tid);
-      else show = sn && tn && sn.type === filter && tn.type === filter;
-      d3.select(this).style('display', show && d3.select('#distToggle').classed('on') ? null : 'none');
+      d3.select(this).style('display', linkVisible(l) && d3.select('#distToggle').classed('on') ? null : 'none');
     });
+  }
+
+  function restartSim(filter) {
+    simH.stop(); simK.stop(); simA.stop();
+    if (filter === 'hiragana') simH.alpha(cfg('hira').alphaWake).restart();
+    else if (filter === 'katakana') simK.alpha(cfg('kata').alphaWake).restart();
+    else simA.alpha(cfg('cross').alphaWake).restart();
   }
 
   const filterBtns = d3.selectAll('.filter-btn');
@@ -444,10 +434,7 @@ async function main() {
     const f = btn.attr('data-filter');
     activeFilter = f;
     showFilter(f);
-    simH.stop(); simK.stop(); simA.stop();
-    if (f === 'hiragana') simH.alpha(cfg('hira').alphaWake).restart();
-    else if (f === 'katakana') simK.alpha(cfg('kata').alphaWake).restart();
-    else simA.alpha(cfg('cross').alphaWake).restart();
+    restartSim(f);
     if (selectedNode) {
       const hide = f === 'cross' ? !aNodeIds.has(selectedNode.id)
         : f === 'hiragana' ? !hNodeIds.has(selectedNode.id)
@@ -485,10 +472,7 @@ async function main() {
   }
   filterBtns.classed('active', false);
   filterBtns.filter(`[data-filter="${activeFilter}"]`).classed('active', true);
-  simH.stop(); simK.stop(); simA.stop();
-  if (activeFilter === 'hiragana') simH.alpha(cfg('hira').alphaWake).restart();
-  else if (activeFilter === 'katakana') simK.alpha(cfg('kata').alphaWake).restart();
-  else simA.alpha(cfg('cross').alphaWake).restart();
+  restartSim(activeFilter);
   showFilter(activeFilter);
 
   // ─── Resize ──────────────────────────────────────────────
@@ -496,8 +480,10 @@ async function main() {
     width = window.innerWidth;
     height = window.innerHeight;
     svg.attr('viewBox', [0, 0, width, height]);
-    [[simH, cH], [simK, cK], [simA, cX]].forEach(([s, c]) =>
-      s.force('center', d3.forceCenter(width / 2, height / 2)).alpha(c.alphaWake).restart());
+    [[simH, cH], [simK, cK], [simA, cX]].forEach(([s, c]) => {
+      s.force('x').x(width / 2); s.force('y').y(height / 2);
+      s.force('center', d3.forceCenter(width / 2, height / 2)).alpha(c.alphaWake).restart();
+    });
   });
 
   // ─── Distance slider ─────────────────────────────────────
@@ -545,19 +531,17 @@ async function main() {
       .text(function(l){ return l.dist != null ? l.dist : ''; }).style('display', 'none');
 
     simH.nodes(hData);
-    simH.force('link', mkLink(hLinks, cH)).force('charge', d3.forceManyBody().strength(charge))
-      .force('x', d3.forceX(width/2).strength(SLIDER.centering)).force('y', d3.forceY(height/2).strength(SLIDER.centering));
+    simH.force('link', mkLink(hLinks, cH));
+    simH.force('charge').strength(charge);
     simK.nodes(kData);
-    simK.force('link', mkLink(kLinks, cK)).force('charge', d3.forceManyBody().strength(charge))
-      .force('x', d3.forceX(width/2).strength(SLIDER.centering)).force('y', d3.forceY(height/2).strength(SLIDER.centering));
+    simK.force('link', mkLink(kLinks, cK));
+    simK.force('charge').strength(charge);
     simA.nodes(aData);
-    simA.force('link', mkLink(aLinks, cX)).force('charge', d3.forceManyBody().strength(charge))
-      .force('x', d3.forceX(width/2).strength(SLIDER.centering)).force('y', d3.forceY(height/2).strength(SLIDER.centering));
+    simA.force('link', mkLink(aLinks, cX));
+    simA.force('charge').strength(charge);
 
     showFilter(activeFilter);
-    if (activeFilter === 'hiragana') simH.alpha(cH.alphaWake).restart();
-    else if (activeFilter === 'katakana') simK.alpha(cK.alphaWake).restart();
-    else simA.alpha(cX.alphaWake).restart();
+    restartSim(activeFilter);
   }
 
   if (slider) {

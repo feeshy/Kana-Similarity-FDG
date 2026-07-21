@@ -4,11 +4,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>五十音图 — 平假名・片假名・罗马音</title>
-  <meta name="description" content="完整的日语五十音图表，涵盖清音、浊音、半浊音、拗音和促音。每个假名同时显示平假名、片假名与罗马音，支持切换手写体字体。">
+  <title>五十音图 — 清音・浊音・促音・拗音四种显示模式</title>
+  <meta name="description" content="交互式日语五十音图表，支持清音、浊音/半浊音、促音、拗音四种显示模式。特色功能：浊音/半浊音行首切换、拗音变体切换，附带点击发音（TTS）与手写体字体切换。">
 
-  <meta property="og:title" content="五十音图 — 平假名・片假名・罗马音">
-  <meta property="og:description" content="完整的日语五十音图表，涵盖清音、浊音、半浊音、拗音和促音。每个假名同时显示平假名、片假名与罗马音，支持切换手写体字体。">
+  <meta property="og:title" content="五十音图 — 清音・浊音・促音・拗音四种显示模式">
+  <meta property="og:description" content="交互式日语五十音图表，支持清音、浊音/半浊音、促音、拗音四种显示模式。特色功能：浊音/半浊音行首切换、拗音变体切换，附带点击发音（TTS）与手写体字体切换。">
   <meta property="og:type" content="website">
   <meta property="og:image" content="https://kana.feeshy.top/assets/maskable.svg">
   <meta property="og:url" content="https://kana.feeshy.top/zh/chart">
@@ -28,8 +28,8 @@
     {
       "@context": "https://schema.org",
       "@type": "WebApplication",
-      "name": "五十音图",
-      "description": "完整的日语五十音图表，涵盖清音、浊音、半浊音、拗音和促音。每个假名同时显示平假名、片假名与罗马音，支持切换手写体字体。",
+      "name": "五十音图 — 清音・浊音・促音・拗音四种显示模式",
+      "description": "交互式日语五十音图表，支持清音、浊音/半浊音、促音、拗音四种显示模式。特色功能：浊音/半浊音行首切换、拗音变体切换，附带点击发音（TTS）与手写体字体切换。",
       "url": "https://kana.feeshy.top/zh/chart",
       "applicationCategory": "EducationalApplication",
       "operatingSystem": "All",
@@ -55,6 +55,8 @@
     <span class="filter-sep"></span>
     <button class="font-a-btn" data-font="connected" aria-label="Connected"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></button>
     <button class="font-a-btn" data-font="disconnected" aria-label="Disconnected"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg></button>
+    <span class="filter-sep"></span>
+    <button class="tts-btn" id="ttsBtn" aria-label="发音"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg></button>
     <div class="font-tip" id="fontTip"></div>
   </div>
 

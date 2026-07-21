@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kana Similarity FDG — Distinguish Hiragana &amp; Katakana</title>
+  <title>Kana Similarity FDG & Gojūon Chart — Distinguish Hiragana & Katakana</title>
   <meta name="description" content="Learn to distinguish similar hiragana and katakana on a force-directed graph by exploring their romaji readings and kanji origins. Discover perceptual distance and visual differences between confusing kana pairs (e.g. ぬ-め, ほ-は, フ-ワ, シ-ツ).">
   <meta name="keywords" content="hiragana, katakana, similar, confusing, distinguish, difference, learn, japanese, kana, kanji, perceptual similarity, visual similarity, visual difference, force-directed graph, romaji reading, kanji origin, perceptual distance, d3-js">
   <meta name="baidu-site-verification" content="codeva-JeKZHypDxq" />
 
-  <meta property="og:title" content="Kana Similarity FDG">
+  <meta property="og:title" content="Kana Similarity FDG & Gojūon Chart — Distinguish Hiragana & Katakana">
   <meta property="og:description" content="Learn to distinguish similar hiragana and katakana on a force-directed graph by exploring their romaji readings and kanji origins. Discover perceptual distance and visual differences between confusing kana pairs (e.g. ぬ-め, ほ-は, フ-ワ, シ-ツ).">
   <meta property="og:type" content="website">
   <meta property="og:image" content="https://kana.feeshy.top/assets/maskable.svg">
@@ -31,7 +31,7 @@
     {
       "@context": "https://schema.org",
       "@type": "WebApplication",
-      "name": "Kana Similarity FDG",
+      "name": "Kana Similarity FDG & Gojūon Chart",
       "description": "Learn to distinguish similar hiragana and katakana on a force-directed graph by exploring their romaji readings and kanji origins. Discover perceptual distance and visual differences between confusing kana pairs (e.g. ぬ-め, ほ-は, フ-ワ, シ-ツ).",
       "url": "https://kana.feeshy.top",
       "applicationCategory": "EducationalApplication",
@@ -44,13 +44,15 @@
     }
   </script>
   <style>
-    body{overflow:auto!important;height:auto!important;display:flex;align-items:center;justify-content:center}
-    .lang-links a{color:#86868b;text-decoration:none;margin:0 4px}
-    .lang-links a:hover{color:#1d1d1f}
-    @media(prefers-color-scheme:dark){.lang-links a{color:#98989d}.lang-links a:hover{color:#f5f5f7}}
+    body{overflow:auto!important;height:auto!important;display:flex;align-items:center;justify-content:center;margin:0;min-height:100svh;flex-direction:column;gap:16px}
+    .fav{display:inline;width:2em;height:2em;vertical-align:middle}
+    h1{font-size:20px;font-weight:600;color:var(--t1);display:inline}
+    .lang-links a{color:var(--t2);text-decoration:none;margin:0 4px}
+    .lang-links a:hover{color:var(--t1)}
   </style>
 </head>
 <body>
+  <div><img class="fav" src="/assets/favicon.svg" alt=""><h1> Kana Similarity FDG &amp; Gojūon Chart</h1></div>
   <div class="lang-links"><a href="/en/">English</a> <span style="opacity:.3">·</span> <a href="/ja/">日本語</a> <span style="opacity:.3">·</span> <a href="/zh/">中文</a></div>
 </body>
 </html>
