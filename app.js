@@ -1,3 +1,4 @@
+if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
 var ttsKanaFix = {'は':'ハ','へ':'ヘ'};
 var ttsJV = null;
 

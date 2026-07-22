@@ -59,6 +59,13 @@ const HIGHLIGHT = {
 // ─── FDG Module (Force-Directed Graph) ────────────────
 async function main() {
 
+  // ─── Reset persistent state from prior navigation ────────
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  window.scrollTo(0, 0);
+  document.documentElement.scrollTop = 0;
+  document.body.scrollTop = 0;
+  void document.body.offsetHeight;
+
   // ─── Data ────────────────────────────────────────────────
   const HIRAGANA = [
     { id: 'h-a', kana: 'あ', romaji: 'a', origin: '安' }, { id: 'h-i', kana: 'い', romaji: 'i', origin: '以' },
@@ -192,6 +199,14 @@ async function main() {
     .on('zoom', (e) => g.attr('transform', e.transform));
   svg.call(zoom);
   svg.call(zoom.transform, d3.zoomIdentity);
+
+  // Re‑initialize zoom on bfcache restore / back‑nav relayout
+  window.addEventListener('pageshow', (e) => {
+    width = window.innerWidth;
+    height = window.innerHeight;
+    svg.attr('viewBox', [0, 0, width, height]);
+    svg.call(zoom.transform, d3.zoomIdentity);
+  });
 
   // ─── Deep-cloned data per simulation ─────────────────────
   function makeSimData(nodes) {
