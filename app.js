@@ -95,3 +95,7 @@ if ('serviceWorker' in navigator) {
       .catch(err => console.error('SW registration failed:', err));
   });
 }
+
+window.addEventListener('pageshow', (e) => {
+  if (e.persisted) window.location.reload();
+});
