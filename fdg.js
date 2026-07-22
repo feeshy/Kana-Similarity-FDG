@@ -191,6 +191,7 @@ async function main() {
     .scaleExtent([FORCE.zoomMin, FORCE.zoomMax])
     .on('zoom', (e) => g.attr('transform', e.transform));
   svg.call(zoom);
+  svg.call(zoom.transform, d3.zoomIdentity);
 
   // ─── Deep-cloned data per simulation ─────────────────────
   function makeSimData(nodes) {
