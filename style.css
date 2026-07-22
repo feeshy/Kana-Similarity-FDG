@@ -5,7 +5,7 @@
 @media(prefers-color-scheme:dark){:root{--t1:#f5f5f7;--t2:#98989d;--b1:#1c1c1e;--b2:rgba(44,44,46,.75)}}
 
 *{margin:0;padding:0;box-sizing:border-box}
-html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+html{overflow:hidden;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 body{
   font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
   background:var(--b1);color:var(--t1);
