@@ -178,6 +178,7 @@ async function main() {
 
   // ─── SVG setup ───────────────────────────────────────────
   const svg = d3.select('#graph');
+  svg.node().addEventListener('touchstart', function(e) { e.preventDefault(); }, { passive: false });
   let width = window.innerWidth;
   let height = window.innerHeight;
   svg.attr('viewBox', [0, 0, width, height]);
