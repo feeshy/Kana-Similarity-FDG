@@ -59,13 +59,6 @@ const HIGHLIGHT = {
 // ─── FDG Module (Force-Directed Graph) ────────────────
 async function main() {
 
-  // ─── Reset persistent state from prior navigation ────────
-  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
-  window.scrollTo(0, 0);
-  document.documentElement.scrollTop = 0;
-  document.body.scrollTop = 0;
-  void document.body.offsetHeight;
-
   // ─── Data ────────────────────────────────────────────────
   const HIRAGANA = [
     { id: 'h-a', kana: 'あ', romaji: 'a', origin: '安' }, { id: 'h-i', kana: 'い', romaji: 'i', origin: '以' },
@@ -189,6 +182,24 @@ async function main() {
   let height = window.innerHeight;
   svg.attr('viewBox', [0, 0, width, height]);
 
+  // Patch getScreenCTM — WebAPK 导航过渡后可能返回含 28px 偏移的陈旧矩阵。
+  // 以 getBoundingClientRect 为准修正平移量。
+  {
+    const n = svg.node();
+    const orig = n.getScreenCTM.bind(n);
+    n.getScreenCTM = () => {
+      const ctm = orig();
+      const r = n.getBoundingClientRect();
+      if (Math.abs(ctm.f - r.top) > 0.5 || Math.abs(ctm.e - r.left) > 0.5) {
+        const m = new DOMMatrix(ctm);
+        m.e = r.left;
+        m.f = r.top;
+        return m;
+      }
+      return ctm;
+    };
+  }
+
   const g = svg.append('g').attr('will-change', 'transform');
   const linkG = g.append('g').attr('class', 'links');
   const nodeG = g.append('g').attr('class', 'nodes');
@@ -198,14 +209,10 @@ async function main() {
     .scaleExtent([FORCE.zoomMin, FORCE.zoomMax])
     .on('zoom', (e) => g.attr('transform', e.transform));
   svg.call(zoom);
-  svg.call(zoom.transform, d3.zoomIdentity);
-
-  // Re‑initialize zoom on bfcache restore / back‑nav relayout
-  window.addEventListener('pageshow', (e) => {
-    width = window.innerWidth;
-    height = window.innerHeight;
-    svg.attr('viewBox', [0, 0, width, height]);
-    svg.call(zoom.transform, d3.zoomIdentity);
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      svg.call(zoom.transform, d3.zoomIdentity);
+    });
   });
 
   // ─── Deep-cloned data per simulation ─────────────────────
