@@ -13,7 +13,7 @@ body{
 }
 svg{display:block}
 svg:active{cursor:grabbing}
-#graph{width:100%;height:100vh;cursor:grab}
+#graph{width:100%;height:100vh;cursor:grab;touch-action:none}
 .link{fill:none;stroke-width:3;cursor:default;transition:all .3s}
 .link.hl{stroke:#f5a623!important;filter:drop-shadow(0 0 5px #f5a623)}
 .link-label{fill:var(--t2);pointer-events:none;opacity:.6}
