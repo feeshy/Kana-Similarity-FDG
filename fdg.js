@@ -178,7 +178,6 @@ async function main() {
 
   // ─── SVG setup ───────────────────────────────────────────
   const svg = d3.select('#graph');
-  window.scrollTo(0, 0);
   let width = window.innerWidth;
   let height = window.innerHeight;
   svg.attr('viewBox', [0, 0, width, height]);
