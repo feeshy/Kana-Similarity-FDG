@@ -182,7 +182,7 @@ async function main() {
   let height = window.innerHeight;
   svg.attr('viewBox', [0, 0, width, height]);
 
-  const g = svg.append('g');
+  const g = svg.append('g').attr('will-change', 'transform');
   const linkG = g.append('g').attr('class', 'links');
   const nodeG = g.append('g').attr('class', 'nodes');
 
